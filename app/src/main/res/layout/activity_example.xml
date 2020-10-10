@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ExampleActivity">
+
+    <TextView
+        android:id="@+id/first_counter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="120dp"
+        android:fontFamily="@font/open_sans"
+        android:text="First"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/second_counter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="48dp"
+        android:fontFamily="@font/open_sans"
+        android:text="Second"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/first_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="@+id/first_counter_title"
+        app:layout_constraintStart_toStartOf="@+id/first_counter_title"
+        app:layout_constraintTop_toBottomOf="@+id/first_counter_title"
+        tools:text="17" />
+
+    <TextView
+        android:id="@+id/second_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sans"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="@+id/second_counter_title"
+        app:layout_constraintStart_toStartOf="@+id/second_counter_title"
+        app:layout_constraintTop_toBottomOf="@+id/second_counter_title"
+        tools:text="37" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_one_first_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Plus one"
+        app:layout_constraintEnd_toEndOf="@+id/first_counter"
+        app:layout_constraintStart_toStartOf="@+id/first_counter"
+        app:layout_constraintTop_toBottomOf="@+id/first_counter" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_five_first_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plus five"
+        app:layout_constraintEnd_toEndOf="@+id/add_one_first_button"
+        app:layout_constraintStart_toStartOf="@+id/add_one_first_button"
+        app:layout_constraintTop_toBottomOf="@+id/add_one_first_button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_one_second_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Plus one"
+        app:layout_constraintEnd_toEndOf="@+id/second_counter"
+        app:layout_constraintStart_toStartOf="@+id/second_counter"
+        app:layout_constraintTop_toBottomOf="@+id/second_counter" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_five_second_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plus five"
+        app:layout_constraintEnd_toEndOf="@+id/add_one_second_button"
+        app:layout_constraintStart_toStartOf="@+id/add_one_second_button"
+        app:layout_constraintTop_toBottomOf="@+id/add_one_second_button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clear_counters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        app:layout_constraintEnd_toEndOf="@+id/add_five_second_button"
+        app:layout_constraintStart_toStartOf="@+id/add_five_first_button"
+        app:layout_constraintTop_toBottomOf="@+id/add_five_first_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
