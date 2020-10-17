@@ -4,9 +4,14 @@ import com.example.onto.base.MviAction
 
 sealed class ExampleAction : MviAction {
 
-    data class UpdateCounter(
-        val addNumber: Int,
-        val addToCounter: Int
+    object RetrieveValues : ExampleAction()
+
+    data class UpdateFirstCounter(
+        val addNumber: Int
+    ) : ExampleAction()
+
+    data class UpdateSecondCounter(
+        val addNumber: Int
     ) : ExampleAction()
 
     object ClearCounters : ExampleAction()

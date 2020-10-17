@@ -11,7 +11,9 @@ import kotlinx.android.synthetic.main.activity_example.*
 class ExampleActivity : BaseActivity<ExampleViewState, ExampleIntent>() {
     private val firstCounterIntents = MutableLiveData<ExampleIntent>()
     private val secondCounterIntents = MutableLiveData<ExampleIntent>()
-    private val otherIntents = MutableLiveData<ExampleIntent>()
+    private val otherIntents = MutableLiveData<ExampleIntent>().also {
+        it.value = ExampleIntent.InitialIntent
+    }
 
     override val layoutResourceId: Int = R.layout.activity_example
 
