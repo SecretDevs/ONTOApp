@@ -1,49 +1,49 @@
 package com.example.onto
 
-import androidx.lifecycle.MutableLiveData
 import com.example.onto.base.BaseViewModel
 
 class ExampleViewModel :
     BaseViewModel<ExampleViewState, ExampleEffect, ExampleIntent, ExampleAction>() {
-    private val viewStateViewModel = MutableLiveData<ExampleEffect>()
     private val exampleRepo = ExampleRepository()
 
-    override val stateReducer: (ExampleViewState, ExampleEffect) -> ExampleViewState =
-        { oldState, effect ->
-            when (effect) {
-                is ExampleEffect.UpdateCounter -> ExampleViewState(
-                    firstCounter = effect.valueFirst,
-                    secondCounter = effect.valueSecond
-                )
-            }
-        }
-    override val intentInterpreter: (ExampleIntent) -> ExampleAction = {
-        when (it) {
-            is ExampleIntent.AddOneFirstIntent -> ExampleAction.UpdateCounter(1, 1)
-            is ExampleIntent.AddFiveFirstIntent -> ExampleAction.UpdateCounter(5, 1)
-            is ExampleIntent.AddOneSecondIntent -> ExampleAction.UpdateCounter(1, 2)
-            is ExampleIntent.AddFiveSecondIntent -> ExampleAction.UpdateCounter(5, 2)
+    override fun initialState(): ExampleViewState = ExampleViewState()
+
+    override fun intentInterpreter(intent: ExampleIntent): ExampleAction =
+        when (intent) {
+            is ExampleIntent.InitialIntent -> ExampleAction.RetrieveValues
+            is ExampleIntent.AddOneFirstIntent -> ExampleAction.UpdateFirstCounter(1)
+            is ExampleIntent.AddFiveFirstIntent -> ExampleAction.UpdateFirstCounter(5)
+            is ExampleIntent.AddOneSecondIntent -> ExampleAction.UpdateSecondCounter(1)
+            is ExampleIntent.AddFiveSecondIntent -> ExampleAction.UpdateSecondCounter(5)
             is ExampleIntent.ClearCountersIntent -> ExampleAction.ClearCounters
         }
-    }
 
-    init {
-        _viewStateLiveData.value = ExampleViewState()
-        _viewStateLiveData.addSource(viewStateViewModel) {
-            _viewStateLiveData.value = stateReducer(_viewStateLiveData.value!!, it)
-        }
-    }
-
-    override fun performAction(action: ExampleAction) {
-        val effect = when (action) {
-            is ExampleAction.UpdateCounter -> {
-                exampleRepo.updateCounter(action.addNumber, action.addToCounter)
+    override fun performAction(action: ExampleAction): ExampleEffect =
+        when (action) {
+            is ExampleAction.RetrieveValues -> {
+                val (first, second) = exampleRepo.getValues()
+                ExampleEffect.UpdateCounter(first, second)
+            }
+            is ExampleAction.UpdateFirstCounter -> {
+                val (first, second) = exampleRepo.updateCounter(action.addNumber, 1)
+                ExampleEffect.UpdateCounter(first, second)
+            }
+            is ExampleAction.UpdateSecondCounter -> {
+                val (first, second) = exampleRepo.updateCounter(action.addNumber, 2)
+                ExampleEffect.UpdateCounter(first, second)
             }
             is ExampleAction.ClearCounters -> {
-                exampleRepo.clearCounter()
+                val (first, second) = exampleRepo.clearCounter()
+                ExampleEffect.UpdateCounter(first, second)
             }
         }
-        viewStateViewModel.value = effect
-    }
+
+    override fun stateReducer(oldState: ExampleViewState, effect: ExampleEffect): ExampleViewState =
+        when (effect) {
+            is ExampleEffect.UpdateCounter -> ExampleViewState(
+                firstCounter = effect.valueFirst,
+                secondCounter = effect.valueSecond
+            )
+        }
 
 }
