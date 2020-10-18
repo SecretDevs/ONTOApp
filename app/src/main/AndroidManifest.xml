@@ -32,18 +32,18 @@
         <activity
             android:name=".maps.MapsActivity"
             android:label="@string/title_activity_maps">
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".ExampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts"/>
-
-        <activity android:name=".ExampleActivity">
         </activity>
     </application>
 
