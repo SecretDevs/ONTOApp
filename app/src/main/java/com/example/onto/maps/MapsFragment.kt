@@ -6,16 +6,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.onto.R
+import com.example.onto.base.BaseFragment
+import com.example.onto.base.MviViewModel
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
 
-class MapsFragment : Fragment() {
+@AndroidEntryPoint
+class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMarkerClickListener,
+    OnMapReadyCallback {
+
+    private lateinit var map : GoogleMap
+    override val layoutResourceId: Int = R.layout.fragment_maps
+    override val viewModel: MapsViewModel by viewModels()
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -32,17 +43,25 @@ class MapsFragment : Fragment() {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_maps, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    override fun initViews() {
+        TODO("Not yet implemented")
+    }
+
+    override fun render(viewState: MapsViewState) {
+        map.addMarker(MarkerOptions().position(LatLng(20.0, 20.0)).title("Marker"))
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
+        map = p0!!
+    }
+
+    override fun onMarkerClick(p0: Marker?): Boolean {
+        TODO("Not yet implemented")
     }
 }

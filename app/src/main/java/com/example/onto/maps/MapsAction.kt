@@ -1,7 +1,16 @@
 package com.example.onto.maps
 
+import com.example.onto.ExampleAction
 import com.example.onto.base.MviAction
+import com.example.onto.vo.OntoShop
 
 sealed class MapsAction: MviAction {
-    //TODO
+
+    object RetrieveShops : MapsAction()
+
+    data class ChooseNextShop(
+        val nextShop: OntoShop
+    ) : MapsAction()
+
+    object MyLocation : MapsAction()
 }

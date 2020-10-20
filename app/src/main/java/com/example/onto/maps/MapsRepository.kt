@@ -1,13 +1,21 @@
 package com.example.onto.maps
 
-import com.example.onto.api.OntoApi
-import com.example.onto.api.OntoApiService
+import com.example.onto.data.local.ShopDao
+import com.example.onto.data.remote.OntoRemoteDataSource
+import com.example.onto.di.AppModule
+import com.example.onto.data.remote.OntoService
+import com.example.onto.utils.performGetOperation
 import com.example.onto.vo.OntoShop
+import javax.inject.Inject
 
-class MapsRepository {
-    fun getOntoShops(): MutableList<OntoShop>{
-        OntoApi.instance.create(OntoApiService::class.java)
-        //TODO
-        return ArrayList()
-    }
+class MapsRepository @Inject constructor(
+    private val remoteDataSource: OntoRemoteDataSource,
+    private val localDataSource: ShopDao
+) {
+
+    fun getShops() = performGetOperation(
+        databaseQuery = { localDataSource.getAllShops() },
+        networkCall = { remoteDataSource.getShops() },
+        saveCallResult = { localDataSource.insertAll(it.data) }
+    )
 }
