@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.MviViewModel
@@ -21,11 +22,17 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMarkerClickListener,
-    OnMapReadyCallback {
+class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMarkerClickListener {
 
-    private lateinit var map : GoogleMap
+    private val markersIntents = MutableLiveData<MapsIntent>()
+    private val otherIntents = MutableLiveData<MapsIntent>().also {
+        it.value = MapsIntent.InitialIntent
+    }
+
+    private lateinit var map: GoogleMap
+
     override val layoutResourceId: Int = R.layout.fragment_maps
+
     override val viewModel: MapsViewModel by viewModels()
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -38,6 +45,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+        map = googleMap
         val sydney = LatLng(-34.0, 151.0)
         googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
@@ -50,15 +58,23 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     }
 
     override fun initViews() {
-        TODO("Not yet implemented")
+        _intentLiveData.addSource(otherIntents) {
+            _intentLiveData.value = it
+        }
     }
 
     override fun render(viewState: MapsViewState) {
-        map.addMarker(MarkerOptions().position(LatLng(20.0, 20.0)).title("Marker"))
-    }
-
-    override fun onMapReady(p0: GoogleMap?) {
-        map = p0!!
+        /*for (i in 0..viewState.ontoShopsList!!.size) {
+            map.addMarker(
+                MarkerOptions().position(
+                    LatLng(
+                        viewState.ontoShopsList[i].location.latitude.toDouble(),
+                        viewState.ontoShopsList[i].location.longitude.toDouble()
+                    )
+                ).title(viewState.ontoShopsList[i].name)
+            )
+        }*/
+        val a = 1
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {

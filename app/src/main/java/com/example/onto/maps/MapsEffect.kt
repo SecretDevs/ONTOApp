@@ -10,7 +10,8 @@ sealed class MapsEffect : MviEffect {
     ) : MapsEffect()
 
     class ChooseShop(
-        val currentShop: OntoShop,
         val nextShop: OntoShop
     ) : MapsEffect()
+
+    class FindUserLocation() : MapsEffect()
 }

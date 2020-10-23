@@ -4,4 +4,4 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class OntoResponse(@field:Json(name = "data")val data: ShopsData)
+data class ShopsData(@field:Json(name = "shops")val shops: List<OntoShop>)

@@ -1,22 +1,18 @@
 package com.example.onto.vo
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@Entity(tableName = "shops")
+@JsonClass(generateAdapter = true)
 data class OntoShop(
-    @PrimaryKey(autoGenerate = true)
-    @Json(name = "shop_id")
-    @ColumnInfo(name = "shop_id")
+    @field:Json(name = "shop_id")
     val id: Long,
-    @ColumnInfo(name = "shop_name")
+    @field:Json(name = "name")
     val name: String,
+    @field:Json(name = "address")
     val address: String,
-    @Embedded
+    @field:Json(name = "location")
     val location: OntoLocation,
-    @Embedded
+    @field:Json(name = "partner")
     val partner: OntoPartner
 )

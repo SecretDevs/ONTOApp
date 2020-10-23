@@ -1,13 +1,14 @@
 package com.example.onto.vo
 
-import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class OntoPartner(
-    @Json(name = "partner_id")
-    @ColumnInfo(name = "partner_id")
+    @field:Json(name = "partner_id")
     val id: Long,
-    @ColumnInfo(name = "partner_name")
+    @field:Json(name = "name")
     val name: String,
+    @field:Json(name = "logo")
     val logo: String
 )

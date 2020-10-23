@@ -4,13 +4,11 @@ import com.example.onto.ExampleAction
 import com.example.onto.base.MviAction
 import com.example.onto.vo.OntoShop
 
-sealed class MapsAction: MviAction {
+sealed class MapsAction : MviAction {
 
     object RetrieveShops : MapsAction()
 
-    data class ChooseNextShop(
-        val nextShop: OntoShop
-    ) : MapsAction()
+    object ChooseNextShop : MapsAction()
 
-    object MyLocation : MapsAction()
+    object FindUserLocation : MapsAction()
 }
