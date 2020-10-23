@@ -3,8 +3,10 @@ package com.example.onto.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.example.onto.utils.distinctUnilChanged
+import androidx.lifecycle.viewModelScope
+import com.example.onto.utils.distinctUntilChanged
 import com.example.onto.utils.map
+import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<
         VS : MviViewState,
@@ -13,7 +15,7 @@ abstract class BaseViewModel<
         A : MviAction> : ViewModel(), MviViewModel<VS, I> {
     protected abstract fun initialState(): VS
     protected abstract fun intentInterpreter(intent: I): A
-    protected abstract fun performAction(action: A): E
+    protected abstract suspend fun performAction(action: A): E
     protected abstract fun stateReducer(oldState: VS, effect: E): VS
 
     private val viewStateLiveData = MediatorLiveData<VS>().also {
@@ -26,27 +28,29 @@ abstract class BaseViewModel<
         }
     }
 
-    private var clearLastEffectSource: (() -> Unit)? = null
+    private var clearLastActionSource: (() -> Unit)? = null
 
     protected fun addIntermediateEffect(effect: E) {
         _effectLiveData.value = effect
     }
 
-    override fun states(): LiveData<VS> = viewStateLiveData.distinctUnilChanged()
+    override fun states(): LiveData<VS> = viewStateLiveData.distinctUntilChanged()
 
     override fun processIntents(intents: LiveData<I>) {
-        clearLastEffectSource?.let { it() }
+        clearLastActionSource?.let { it() }
 
-        val effectLiveData = intents.map { performAction(intentInterpreter(it)) }
-        _effectLiveData.addSource(effectLiveData) {
-            _effectLiveData.value = it
+        val intentLiveData = intents.map { intentInterpreter(it) }
+        _effectLiveData.addSource(intentLiveData) {
+            viewModelScope.launch {
+                _effectLiveData.postValue(performAction(it))
+            }
         }
 
-        clearLastEffectSource = { _effectLiveData.removeSource(effectLiveData) }
+        clearLastActionSource = { _effectLiveData.removeSource(intentLiveData) }
     }
 
     override fun onCleared() {
         super.onCleared()
-        clearLastEffectSource?.let { it() }
+        clearLastActionSource?.let { it() }
     }
 }
