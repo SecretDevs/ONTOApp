@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 
 abstract class BaseActivity<
         VS : MviViewState,

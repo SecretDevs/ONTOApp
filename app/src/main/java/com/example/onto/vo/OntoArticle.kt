@@ -1,9 +1,11 @@
 package com.example.onto.vo
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class OntoArticle(
-    @Json(name = "article_id") val id: Long,
+    @field:Json(name = "article_id") val id: Long,
     val name: String,
     val image: String,
     val text: String,
