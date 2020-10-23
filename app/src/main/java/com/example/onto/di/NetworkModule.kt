@@ -22,7 +22,6 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl("https://onto-ipc.herokuapp.com/")
             .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
             .create(OntoApiService::class.java)
     }
