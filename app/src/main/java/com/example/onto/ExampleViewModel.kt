@@ -18,7 +18,7 @@ class ExampleViewModel :
             is ExampleIntent.ClearCountersIntent -> ExampleAction.ClearCounters
         }
 
-    override fun performAction(action: ExampleAction): ExampleEffect =
+    override suspend fun performAction(action: ExampleAction): ExampleEffect =
         when (action) {
             is ExampleAction.RetrieveValues -> {
                 val (first, second) = exampleRepo.getValues()
