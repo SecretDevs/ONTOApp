@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_material.*
 
 class MaterialActivity : BaseActivity<MaterialViewState, MaterialIntent>() {
 
-
+//
     private val updateIntent = MutableLiveData<MaterialIntent>()
     private val otherIntent = MutableLiveData<MaterialIntent>().also {
         it.value = MaterialIntent.InitialIntent
