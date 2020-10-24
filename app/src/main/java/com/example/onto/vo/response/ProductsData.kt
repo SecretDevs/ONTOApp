@@ -5,4 +5,4 @@ import com.example.onto.vo.OntoShop
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ProductsData(val products: MutableList<OntoProduct>)
+data class ProductsData(val products: List<OntoProduct>)
