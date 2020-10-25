@@ -1,5 +1,6 @@
 package com.example.onto.di
 
+import com.example.onto.materials.MaterialsRepository
 import com.example.onto.products.ProductsRepository
 import com.example.onto.products.ProductsUseCase
 import com.example.onto.products.ProductsUseCaseImpl

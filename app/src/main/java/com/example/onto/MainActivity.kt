@@ -3,6 +3,7 @@ package com.example.onto
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.onto.maps.MapsFragment
+import com.example.onto.materials.MaterialsFragment
 import com.example.onto.products.ProductsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if(savedInstanceState == null) { // initial transaction should be wrapped like this
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ProductsFragment())
+                .replace(R.id.fragment_container, MaterialsFragment())
                 .commitAllowingStateLoss()
         }
 

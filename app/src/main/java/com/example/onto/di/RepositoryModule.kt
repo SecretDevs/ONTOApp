@@ -24,6 +24,8 @@ object RepositoryModule {
 @Retention(AnnotationRetention.BINARY)
 annotation class RemoteProductsRepository
 
+
+
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class LocalProductsRepository

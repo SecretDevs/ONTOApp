@@ -1,9 +1,10 @@
 package com.example.onto.materials
 import com.example.onto.base.MviAction
+import com.example.onto.products.ProductsAction
 
 sealed class MaterialAction : MviAction {
 
-    object RefreshValues : MaterialAction()
+    object LoadProductsAction : MaterialAction()
 
-    object InitialValues : MaterialAction()
+    object RefreshProductsAction : MaterialAction()
 }
