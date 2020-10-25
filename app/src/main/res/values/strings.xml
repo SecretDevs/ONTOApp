@@ -16,4 +16,9 @@
     <string name="item_empty_text">No data</string>
 
     <string name="price_placeholder">%s ₽</string>
+    <string name="page_map_title">Map</string>
+    <string name="page_discount_title">Sales</string>
+    <string name="page_shop_title">Shop</string>
+    <string name="page_articles_title">Articles</string>
+    <string name="page_user_title">User</string>
 </resources>

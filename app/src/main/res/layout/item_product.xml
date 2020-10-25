@@ -51,11 +51,16 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/item_product_cart_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginBottom="@dimen/margin_default"
             android:padding="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:background="@drawable/gradient"
             android:src="@drawable/ic_add_to_cart"
+            app:shapeAppearanceOverlay="@style/AppTheme.CircleImageView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/item_product_name"
             app:layout_constraintTop_toBottomOf="@+id/item_product_name" />

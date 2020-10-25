@@ -17,6 +17,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
 
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
