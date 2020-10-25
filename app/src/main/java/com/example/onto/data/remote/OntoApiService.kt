@@ -21,7 +21,7 @@ interface OntoApiService {
     suspend fun getOffers(): OntoResponse<OffersData>
 
     @GET("articles")
-    suspend fun getArticles(): OntoResponse<ArticlesData>
+    suspend fun getArticles(): Response<OntoResponse<ArticlesData>>
 
     @GET("points")
     suspend fun getPoints(): OntoResponse<PointsData>

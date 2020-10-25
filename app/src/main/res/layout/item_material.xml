@@ -30,7 +30,7 @@
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <TextView
-                android:id="@+id/material_description"
+                android:id="@+id/item_material_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
