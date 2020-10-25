@@ -1,13 +1,9 @@
-package com.example.onto.maps
+package com.example.onto
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import com.example.onto.R
-import dagger.hilt.EntryPoint
+import com.example.onto.maps.MapsFragment
+import com.example.onto.products.ProductsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if(savedInstanceState == null) { // initial transaction should be wrapped like this
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, MapsFragment())
+                .replace(R.id.fragment_container, ProductsFragment())
                 .commitAllowingStateLoss()
         }
 
