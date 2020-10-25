@@ -15,5 +15,5 @@
     <string name="item_loading_error_text">Loading error</string>
     <string name="item_empty_text">No data</string>
 
-    <string name="price_placeholder">%,.2f ₽</string>
+    <string name="price_placeholder">%s ₽</string>
 </resources>

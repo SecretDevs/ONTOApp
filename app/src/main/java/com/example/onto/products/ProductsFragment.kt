@@ -41,7 +41,7 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
         products_recycler.adapter = productAdapter
         products_recycler.addItemDecoration(
             ProductItemDecoration(
-                resources.getDimensionPixelSize(R.dimen.gutter_default)
+                resources.getDimensionPixelSize(R.dimen.margin_default)
             )
         )
         products_recycler.layoutManager = StaggeredGridLayoutManager(
