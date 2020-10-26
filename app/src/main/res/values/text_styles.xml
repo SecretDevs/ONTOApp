@@ -21,4 +21,8 @@
         <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 
+    <style name="TextAppearance.AppTheme.BadgeText" parent="TextAppearance.AppTheme.Caption">
+        <item name="android:textColor">@color/colorOnBadge</item>
+    </style>
+
 </resources>

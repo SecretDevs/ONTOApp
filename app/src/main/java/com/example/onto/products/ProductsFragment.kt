@@ -17,6 +17,7 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_products
     override val viewModel: ProductsViewModel by viewModels()
+
     private lateinit var productAdapter: ProductAdapter
     private val intentLiveData = MutableLiveData<ProductsIntent>().also { intents ->
         intents.value = ProductsIntent.InitialIntent
@@ -31,9 +32,13 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
             intentLiveData.value = ProductsIntent.RefreshIntent
         }
 
+        cart_view.setOnClickListener {
+            //navigate to cart
+        }
+
         productAdapter = ProductAdapter(
             onRetry = { intentLiveData.value = ProductsIntent.ReloadIntent },
-            onCLick = { },
+            onCLick = { }, //navigate to product details
             onAddToCartClick = { intentLiveData.value = ProductsIntent.AddToCartIntent(it) }
         )
         productAdapter.setHasStableIds(true)

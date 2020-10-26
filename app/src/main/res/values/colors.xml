@@ -16,5 +16,8 @@
     <color name="colorOnSurfaceMedium">#99000000</color>
     <color name="colorOnError">#ffffff</color>
     <color name="colorGray">#404041</color>
+    
+    <color name="colorBadgeBackground">#EB5757</color>
+    <color name="colorOnBadge">#FFFFFF</color>
 
 </resources>
