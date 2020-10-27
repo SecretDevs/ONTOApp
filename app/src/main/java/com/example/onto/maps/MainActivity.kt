@@ -1,5 +1,6 @@
 package com.example.onto.maps
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar

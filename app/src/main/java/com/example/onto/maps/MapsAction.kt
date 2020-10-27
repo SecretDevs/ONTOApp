@@ -6,9 +6,5 @@ import com.example.onto.vo.OntoShop
 
 sealed class MapsAction : MviAction {
 
-    object RetrieveShops : MapsAction()
-
-    object ChooseNextShop : MapsAction()
-
-    object FindUserLocation : MapsAction()
+    object LoadShopsAction : MapsAction()
 }
