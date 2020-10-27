@@ -23,7 +23,7 @@ class MapsViewModel @ViewModelInject constructor(private val repository: MapsRep
         when (action) {
             is MapsAction.LoadShopsAction -> {
                 addIntermediateEffect(MapsEffect.InitialLoadingEffect)
-                when (val result = repository.getShops()){
+                when (val result = repository.getShops()) {
                     is Result.Success -> MapsEffect.ShopsLoadedEffect(result.data)
                     is Result.Error -> MapsEffect.InitialLoadingErrorEffect(result.throwable)
                 }
@@ -34,9 +34,11 @@ class MapsViewModel @ViewModelInject constructor(private val repository: MapsRep
     override fun stateReducer(oldState: MapsViewState, effect: MapsEffect): MapsViewState =
         when (effect) {
             is MapsEffect.InitialLoadingEffect -> MapsViewState.initialLoadingState
-            is MapsEffect.InitialLoadingErrorEffect -> MapsViewState.initialErrorState(
-                effect.throwable
-            )
+            is MapsEffect.InitialLoadingErrorEffect -> {
+                MapsViewState.initialErrorState(
+                    effect.throwable
+                )
+            }
             is MapsEffect.ShopsLoadedEffect -> MapsViewState.shopsLoadedState(effect.shops)
         }
 }
