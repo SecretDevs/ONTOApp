@@ -2,6 +2,8 @@ package com.example.onto.maps
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -12,20 +14,21 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.vo.OntoShop
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_maps.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 
 @AndroidEntryPoint
@@ -274,16 +277,29 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
 
     private fun addMarkers(shopsList: List<OntoShop>){
         if (map != null) {
+            map!!.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireActivity()))
             for (shop in shopsList) {
-                map?.addMarker(
-                    MarkerOptions().position(
-                        LatLng(
-                            shop.location.latitude.toDouble(),
-                            shop.location.longitude.toDouble()
-                        )
-                    ).title(shop.name)
-                        .snippet("Адрес: ${shop.address} \n Партнер: ${shop.partner.name}")
-                )
+                Glide.with(requireContext())
+                    .asBitmap()
+                    .load(shop.partner.logo)
+                    .into(object: CustomTarget<Bitmap>(50, 50) {
+                        override fun onLoadCleared(placeholder: Drawable?) {
+
+                        }
+
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            map?.addMarker(
+                                MarkerOptions().position(
+                                    LatLng(
+                                        shop.location.latitude.toDouble(),
+                                        shop.location.longitude.toDouble()
+                                    )
+                                ).title(shop.name)
+                                    .snippet("Адрес: ${shop.address}\nПартнер: ${shop.partner.name}")
+                                    .icon(BitmapDescriptorFactory.fromBitmap(resource))
+                            )
+                        }
+                    })
             }
         }
     }
