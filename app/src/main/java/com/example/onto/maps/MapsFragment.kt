@@ -12,14 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
@@ -28,9 +26,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.GoogleMap
-import com.google.android.libraries.maps.MapsInitializer
 import com.google.android.libraries.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_maps.*
 
 
@@ -61,6 +59,8 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
 
+    private var savedInstanceState: Bundle? = null
+
     override val layoutResourceId: Int = R.layout.fragment_maps
 
     override val viewModel: MapsViewModel by viewModels()
@@ -79,8 +79,9 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mapView.onCreate(savedInstanceState)
         super.onViewCreated(view, savedInstanceState)
+        this.savedInstanceState = savedInstanceState
+        mapView.onCreate(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -92,14 +93,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     }
 
     override fun initViews() {
-        //mapView.onResume()
-
-        /*try {
-            MapsInitializer.initialize(requireContext())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }*/
-
         retry_button.setOnClickListener {
             intentLiveData.value = MapsIntent.ReloadIntent
         }
@@ -173,7 +166,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            Log.d(TAG, "Current location is ${map?.isMyLocationEnabled}. Using defaults.")
                             Log.d(TAG, "Current location is ${lastKnownLocation}. Using defaults.")
                             map?.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
@@ -191,8 +183,14 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                             CameraUpdateFactory
                                 .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
                         )
+                        map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
+            }else{
+                map?.moveCamera(
+                    CameraUpdateFactory
+                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
+                )
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
@@ -209,14 +207,19 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
          * onRequestPermissionsResult.
          */
         if (ContextCompat.checkSelfPermission(
-                this.requireActivity().applicationContext,
+                this.requireContext().applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
             == PackageManager.PERMISSION_GRANTED
         ) {
             locationPermissionGranted = true
+            intentLiveData.value = MapsIntent.InitialIntent
+        }else{
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            )
         }
-        intentLiveData.value = MapsIntent.InitialIntent
     }
 
     /**
@@ -236,6 +239,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
                     locationPermissionGranted = true
+                    mapView.onCreate(savedInstanceState)
                 } else {
                     val toast = makeText(
                         requireContext(),
@@ -264,10 +268,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                 map?.isMyLocationEnabled = false
                 map?.uiSettings?.isMyLocationButtonEnabled = true
                 lastKnownLocation = null
-                map?.moveCamera(
-                    CameraUpdateFactory
-                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
-                )
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
@@ -281,12 +281,15 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                 Glide.with(requireContext())
                     .asBitmap()
                     .load(shop.partner.logo)
-                    .into(object: CustomTarget<Bitmap>(50, 50) {
+                    .into(object : CustomTarget<Bitmap>(50, 50) {
                         override fun onLoadCleared(placeholder: Drawable?) {
 
                         }
 
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: Transition<in Bitmap>?
+                        ) {
                             map?.addMarker(
                                 MarkerOptions().position(
                                     LatLng(
