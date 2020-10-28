@@ -5,8 +5,8 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.example.onto.R
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.Marker
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.model.Marker
 
 class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapter {
 

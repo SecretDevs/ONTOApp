@@ -15,12 +15,17 @@ class MapsViewModel @ViewModelInject constructor(private val repository: MapsRep
 
     override fun intentInterpreter(intent: MapsIntent): MapsAction =
         when (intent) {
+            is MapsIntent.PermissionsCheckIntent -> MapsAction.CheckPermissionsAction
             is MapsIntent.InitialIntent -> MapsAction.LoadShopsAction
             is MapsIntent.ReloadIntent -> MapsAction.LoadShopsAction
         }
 
     override suspend fun performAction(action: MapsAction): MapsEffect =
         when (action) {
+            is MapsAction.CheckPermissionsAction -> {
+                addIntermediateEffect(MapsEffect.InitialLoadingEffect)
+                MapsEffect.PermissionsCheckEffect
+            }
             is MapsAction.LoadShopsAction -> {
                 addIntermediateEffect(MapsEffect.InitialLoadingEffect)
                 when (val result = repository.getShops()) {
@@ -33,6 +38,7 @@ class MapsViewModel @ViewModelInject constructor(private val repository: MapsRep
 
     override fun stateReducer(oldState: MapsViewState, effect: MapsEffect): MapsViewState =
         when (effect) {
+            is MapsEffect.PermissionsCheckEffect -> MapsViewState.permissionsCheckState
             is MapsEffect.InitialLoadingEffect -> MapsViewState.initialLoadingState
             is MapsEffect.InitialLoadingErrorEffect -> {
                 MapsViewState.initialErrorState(

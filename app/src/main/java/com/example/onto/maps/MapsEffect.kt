@@ -5,6 +5,9 @@ import com.example.onto.base.MviEffect
 import com.example.onto.vo.OntoShop
 
 sealed class MapsEffect : MviEffect {
+
+    object PermissionsCheckEffect : MapsEffect()
+
     object InitialLoadingEffect : MapsEffect()
 
     data class InitialLoadingErrorEffect(

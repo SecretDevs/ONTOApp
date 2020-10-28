@@ -7,9 +7,12 @@ import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -23,10 +26,10 @@ import com.example.onto.base.BaseFragment
 import com.example.onto.vo.OntoShop
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.model.*
+import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.MapsInitializer
+import com.google.android.libraries.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_maps.*
 
@@ -37,7 +40,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     GoogleMap.OnMyLocationClickListener {
 
     private val intentLiveData = MutableLiveData<MapsIntent>().also { intents ->
-        intents.value = MapsIntent.InitialIntent
+        intents.value = MapsIntent.PermissionsCheckIntent
         _intentLiveData.addSource(intents) {
             _intentLiveData.value = it
         }
@@ -89,13 +92,13 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     }
 
     override fun initViews() {
-        mapView.onResume()
+        //mapView.onResume()
 
-        try {
+        /*try {
             MapsInitializer.initialize(requireContext())
         } catch (e: Exception) {
             e.printStackTrace()
-        }
+        }*/
 
         retry_button.setOnClickListener {
             intentLiveData.value = MapsIntent.ReloadIntent
@@ -104,6 +107,9 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
 
     override fun render(viewState: MapsViewState) {
         when {
+            !viewState.isPermissionsChecked -> {
+                getLocationPermission()
+            }
             viewState.isInitialLoading -> {
                 mapView.isVisible = false
                 errorLayout.isVisible = false
@@ -142,8 +148,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     }
 
     private fun loadMap(){
-        // Prompt the user for permission.
-        getLocationPermission()
 
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI()
@@ -169,6 +173,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
+                            Log.d(TAG, "Current location is ${map?.isMyLocationEnabled}. Using defaults.")
                             Log.d(TAG, "Current location is ${lastKnownLocation}. Using defaults.")
                             map?.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
@@ -186,7 +191,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                             CameraUpdateFactory
                                 .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
                         )
-                        map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
             }
@@ -205,18 +209,14 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
          * onRequestPermissionsResult.
          */
         if (ContextCompat.checkSelfPermission(
-                this.requireContext(),
+                this.requireActivity().applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
             == PackageManager.PERMISSION_GRANTED
         ) {
             locationPermissionGranted = true
-        } else {
-            requestPermissions(
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
-            )
         }
+        intentLiveData.value = MapsIntent.InitialIntent
     }
 
     /**
@@ -246,8 +246,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
                 }
             }
         }
-        updateLocationUI()
-        getDeviceLocation()
+        intentLiveData.value = MapsIntent.InitialIntent
     }
 
     /**

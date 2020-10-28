@@ -7,4 +7,5 @@ import com.example.onto.vo.OntoShop
 sealed class MapsAction : MviAction {
 
     object LoadShopsAction : MapsAction()
+    object CheckPermissionsAction : MapsAction()
 }

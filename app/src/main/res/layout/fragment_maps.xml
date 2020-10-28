@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".maps.MapsFragment">
-    <com.google.android.gms.maps.MapView
+    <com.google.android.libraries.maps.MapView
         android:id="@+id/mapView"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.google.android.gms.maps.MapView>
+    </com.google.android.libraries.maps.MapView>
     <ProgressBar
         android:id="@+id/mapsProgressBar"
         android:layout_width="wrap_content"
