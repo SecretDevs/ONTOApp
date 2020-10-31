@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.onto.maps.MapsFragment
+import com.example.onto.materials.MaterialsFragment
 import com.example.onto.products.ProductsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,7 +44,15 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.page_articles -> {
-                    false
+                    if (LAST_ITEM != R.id.page_articles) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, MaterialsFragment())
+                            .commitAllowingStateLoss()
+                        LAST_ITEM = it.itemId
+                        true
+                    } else {
+                        false
+                    }
                 }
                 R.id.page_user -> {
                     false

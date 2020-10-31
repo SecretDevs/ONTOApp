@@ -41,6 +41,11 @@
         <item name="cardElevation">8dp</item>
     </style>
 
+    <style name="AppTheme.MaterialCard" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearance">@style/AppTheme.SmoothCornerView</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+
     <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textAppearance">@style/TextAppearance.AppTheme.Button.OnPrimary</item>
         <item name="android:background">@drawable/gradient</item>

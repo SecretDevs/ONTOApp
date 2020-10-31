@@ -54,16 +54,16 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginBottom="@dimen/margin_default"
-            android:padding="4dp"
+            android:background="@drawable/gradient"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
-            android:background="@drawable/gradient"
+            android:padding="4dp"
             android:src="@drawable/ic_add_to_cart"
-            app:shapeAppearanceOverlay="@style/AppTheme.CircleImageView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/item_product_name"
-            app:layout_constraintTop_toBottomOf="@+id/item_product_name" />
+            app:layout_constraintTop_toBottomOf="@+id/item_product_name"
+            app:shapeAppearanceOverlay="@style/AppTheme.CircleImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
