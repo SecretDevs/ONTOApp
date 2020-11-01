@@ -10,16 +10,18 @@ import com.example.onto.products.recycler.ProductItemDecoration
 import com.example.onto.discount.recycler.DiscountAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_discounts.*
 import kotlinx.android.synthetic.main.fragment_materials.*
+import kotlinx.android.synthetic.main.fragment_materials.refresher
 
 @AndroidEntryPoint
 class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
     override val layoutResourceId: Int
-        get() = R.layout.fragment_materials
+        get() = R.layout.fragment_discounts
 
     override val viewModel: DiscountViewModel by viewModels()
 
-    private lateinit var materialAdapter: DiscountAdapter
+    private lateinit var discountAdapter: DiscountAdapter
 
     private val intentLiveData = MutableLiveData<DiscountIntent>().also { intents ->
         intents.value = DiscountIntent.InitialIntent
@@ -31,42 +33,42 @@ class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
     override fun initViews() {
 
         //refresher.setColorSchemeResources(R.color.colorPrimary)
-        material_refresher.setOnRefreshListener {
+        refresher.setOnRefreshListener {
             intentLiveData.value = DiscountIntent.RefreshIntent
         }
 
-        materialAdapter = DiscountAdapter(
+        discountAdapter = DiscountAdapter(
             onRetry = { intentLiveData.value = DiscountIntent.ReloadIntent },
             onCLick = { },
         )
 
-        materialAdapter.setHasStableIds(true)
+        discountAdapter.setHasStableIds(true)
 
-        material_recycler.adapter = materialAdapter
-        material_recycler.addItemDecoration(
+        discounts_recycler.adapter = discountAdapter
+        discounts_recycler.addItemDecoration(
             ProductItemDecoration(
                 resources.getDimensionPixelSize(R.dimen.gutter_default)
             )
         )
-        material_recycler.layoutManager = LinearLayoutManager(context)
+        discounts_recycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun render(viewState: DiscountlViewState) {
         val state = when {
             viewState.isInitialLoading -> RecyclerState.LOADING
             viewState.initialError != null -> RecyclerState.ERROR
-            viewState.products.isEmpty() -> RecyclerState.EMPTY
+            viewState.offers.isEmpty() -> RecyclerState.EMPTY
             else -> RecyclerState.ITEM
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
 
-        material_refresher.isEnabled = isRefreshable
-        material_refresher.isRefreshing = viewState.isRefreshLoading
-        materialAdapter.updateData(viewState.products, state)
+        refresher.isEnabled = isRefreshable
+        refresher.isRefreshing = viewState.isRefreshLoading
+        discountAdapter.updateData(viewState.offers, state)
 
         if (viewState.refreshError != null) {
             Snackbar.make(
-                material_recycler,
+                discounts_recycler,
                 viewState.refreshError.localizedMessage ?: "",
                 Snackbar.LENGTH_SHORT
             ).show()

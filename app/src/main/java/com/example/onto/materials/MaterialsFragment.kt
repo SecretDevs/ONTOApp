@@ -3,17 +3,15 @@ package com.example.onto.materials
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.materials.recycler.MaterialAdapter
-import com.example.onto.products.recycler.ProductAdapter
 import com.example.onto.products.recycler.ProductItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_materials.*
-import kotlinx.android.synthetic.main.fragment_products.*
+import kotlinx.android.synthetic.main.fragment_materials.refresher
 
 @AndroidEntryPoint
 class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
@@ -34,7 +32,7 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
     override fun initViews() {
 
         //refresher.setColorSchemeResources(R.color.colorPrimary)
-        material_refresher.setOnRefreshListener {
+        refresher.setOnRefreshListener {
             intentLiveData.value = MaterialIntent.RefreshIntent
         }
 
@@ -45,13 +43,13 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
 
         materialAdapter.setHasStableIds(true)
 
-        material_recycler.adapter = materialAdapter
-        material_recycler.addItemDecoration(
+        materials_recycler.adapter = materialAdapter
+        materials_recycler.addItemDecoration(
             ProductItemDecoration(
                 resources.getDimensionPixelSize(R.dimen.gutter_default)
             )
         )
-        material_recycler.layoutManager = LinearLayoutManager(context)
+        materials_recycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun render(viewState: MaterialViewState) {
@@ -63,13 +61,13 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
 
-        material_refresher.isEnabled = isRefreshable
-        material_refresher.isRefreshing = viewState.isRefreshLoading
+        refresher.isEnabled = isRefreshable
+        refresher.isRefreshing = viewState.isRefreshLoading
         materialAdapter.updateData(viewState.products, state)
 
         if (viewState.refreshError != null) {
             Snackbar.make(
-                material_recycler,
+                materials_recycler,
                 viewState.refreshError.localizedMessage ?: "",
                 Snackbar.LENGTH_SHORT
             ).show()

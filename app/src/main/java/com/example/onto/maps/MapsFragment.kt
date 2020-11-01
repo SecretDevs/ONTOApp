@@ -333,7 +333,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
      * Overriding fragment methods for map lifecycle
      */
     //[START Overriding fragment methods for map lifecycle]
-    override fun onResume() {
+  /*  override fun onResume() {
         super.onResume()
         mapView.onResume()
     }
@@ -351,7 +351,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>(), GoogleMap.OnMark
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
-    }
+    }*/
     //[END Overriding fragment methods for map lifecycle]
 
 

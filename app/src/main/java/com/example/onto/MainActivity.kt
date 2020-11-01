@@ -3,6 +3,7 @@ package com.example.onto
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.onto.discount.DiscountFragment
 import com.example.onto.maps.MapsFragment
 import com.example.onto.materials.MaterialsFragment
 import com.example.onto.products.ProductsFragment
@@ -30,7 +31,15 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.page_discount -> {
-                    false
+                    if (LAST_ITEM != R.id.page_discount) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, DiscountFragment())
+                            .commitAllowingStateLoss()
+                        LAST_ITEM = it.itemId
+                        true
+                    } else {
+                        false
+                    }
                 }
                 R.id.page_shop -> {
                     if (LAST_ITEM != R.id.page_shop) {

@@ -48,10 +48,10 @@ class DiscountViewModel @ViewModelInject constructor(
             is DiscountEffect.InitialLoadingErrorEffect -> DiscountlViewState.initialErrorState(
                 effect.throwable
             )
-            is DiscountEffect.DiscountLoadedEffect -> DiscountlViewState.productsLoadedState(effect.products)
-            is DiscountEffect.RefreshLoadingEffect -> DiscountlViewState.refreshLoadingState(oldState.products)
+            is DiscountEffect.DiscountLoadedEffect -> DiscountlViewState.productsLoadedState(effect.offers)
+            is DiscountEffect.RefreshLoadingEffect -> DiscountlViewState.refreshLoadingState(oldState.offers)
             is DiscountEffect.RefreshLoadingErrorEffect -> DiscountlViewState.refreshLoadingErrorState(
-                oldState.products,
+                oldState.offers,
                 effect.throwable
             )
         }

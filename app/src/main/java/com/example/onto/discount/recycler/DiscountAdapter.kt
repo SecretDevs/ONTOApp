@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onto.R
 import com.example.onto.base.recycler.BaseStateAdapter
-import com.example.onto.vo.OntoArticle
+import com.example.onto.vo.OntoOffer
 
 class DiscountAdapter(
     onRetry: () -> Unit,
     private val onCLick: (Long) -> Unit,
 
-) : BaseStateAdapter<OntoArticle, DiscountlViewHolder>(onRetry) {
+) : BaseStateAdapter<OntoOffer, DiscountlViewHolder>(onRetry) {
 
     override fun getDataViewHolder(inflater: LayoutInflater, parent: ViewGroup): DiscountlViewHolder =
         DiscountlViewHolder(
-            inflater.inflate(R.layout.item_material, parent, false),
+            inflater.inflate(R.layout.item_discount, parent, false),
             onCLick,
         )
 

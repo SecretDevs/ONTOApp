@@ -54,6 +54,9 @@ dependencies {
 
     //maps
     implementation "com.google.android.gms:play-services-maps:$maps_version"
+    implementation "com.google.android.libraries.places:places:2.4.0"
+    implementation "com.google.android.libraries.maps:maps:3.1.0-beta"
+
 
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

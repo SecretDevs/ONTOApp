@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/AppTheme.ProductCard"
-    android:id="@+id/item_product_card"
+    android:id="@+id/item_discount_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

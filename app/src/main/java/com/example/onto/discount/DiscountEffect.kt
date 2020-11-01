@@ -1,7 +1,7 @@
 package com.example.onto.discount
 
 import com.example.onto.base.MviEffect
-import com.example.onto.vo.OntoArticle
+import com.example.onto.vo.OntoOffer
 
 sealed class DiscountEffect : MviEffect {
     object InitialLoadingEffect : DiscountEffect()
@@ -11,7 +11,7 @@ sealed class DiscountEffect : MviEffect {
     ) : DiscountEffect()
 
     data class DiscountLoadedEffect(
-        val products: List<OntoArticle>
+        val offers: List<OntoOffer>
     ) : DiscountEffect()
 
     object RefreshLoadingEffect : DiscountEffect()

@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface OntoApiService {
     @GET("shops")
-    suspend fun getShops(): OntoResponse<ShopsData>
+    suspend fun getShops():  Response<OntoResponse<ShopsData>>
 
     @GET("products")
     suspend fun getProducts(): Response<OntoResponse<ProductsData>>
@@ -18,7 +18,7 @@ interface OntoApiService {
     suspend fun getProductById(@Path("product_id") productId: Long): Response<OntoResponse<OntoProduct>>
 
     @GET("offers")
-    suspend fun getOffers(): OntoResponse<OffersData>
+    suspend fun getOffers(): Response<OntoResponse<OffersData>>
 
     @GET("articles")
     suspend fun getArticles(): Response<OntoResponse<ArticlesData>>
