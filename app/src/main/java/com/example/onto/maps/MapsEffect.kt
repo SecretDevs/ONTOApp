@@ -4,13 +4,16 @@ import com.example.onto.base.MviEffect
 import com.example.onto.vo.OntoShop
 
 sealed class MapsEffect : MviEffect {
-    class RetrieveShops(
-        val ontoShops: List<OntoShop>
+
+    object PermissionsCheckEffect : MapsEffect()
+
+    object InitialLoadingEffect : MapsEffect()
+
+    data class InitialLoadingErrorEffect(
+        val throwable: Throwable
     ) : MapsEffect()
 
-    class ChooseShop(
-        val nextShop: OntoShop
+    data class ShopsLoadedEffect(
+        val shops: List<OntoShop>
     ) : MapsEffect()
-
-    class FindUserLocation() : MapsEffect()
 }
