@@ -58,4 +58,5 @@ class ProductsViewModel @ViewModelInject constructor(
                 effect.throwable
             )
         }
+
 }

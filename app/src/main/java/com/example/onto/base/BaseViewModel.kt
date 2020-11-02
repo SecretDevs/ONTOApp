@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.onto.utils.distinctUntilChanged
-import com.example.onto.utils.map
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<
@@ -13,7 +12,7 @@ abstract class BaseViewModel<
         E : MviEffect,
         I : MviIntent,
         A : MviAction> : ViewModel(), MviViewModel<VS, I> {
-    protected abstract fun initialState(): VS
+    abstract fun initialState(): VS
     protected abstract fun intentInterpreter(intent: I): A
     protected abstract suspend fun performAction(action: A): E
     protected abstract fun stateReducer(oldState: VS, effect: E): VS
@@ -28,7 +27,7 @@ abstract class BaseViewModel<
         }
     }
 
-    private var clearLastActionSource: (() -> Unit)? = null
+    private var clearLastIntentSource: (() -> Unit)? = null
 
     protected fun addIntermediateEffect(effect: E) {
         _effectLiveData.value = effect
@@ -37,20 +36,19 @@ abstract class BaseViewModel<
     override fun states(): LiveData<VS> = viewStateLiveData.distinctUntilChanged()
 
     override fun processIntents(intents: LiveData<I>) {
-        clearLastActionSource?.let { it() }
+        clearLastIntentSource?.let { it() }
 
-        val intentLiveData = intents.map { intentInterpreter(it) }
-        _effectLiveData.addSource(intentLiveData) {
+        _effectLiveData.addSource(intents) {
             viewModelScope.launch {
-                _effectLiveData.postValue(performAction(it))
+                _effectLiveData.postValue(performAction(intentInterpreter(it)))
             }
         }
 
-        clearLastActionSource = { _effectLiveData.removeSource(intentLiveData) }
+        clearLastIntentSource = { _effectLiveData.removeSource(intents) }
     }
 
     override fun onCleared() {
         super.onCleared()
-        clearLastActionSource?.let { it() }
+        clearLastIntentSource?.let { it() }
     }
 }
