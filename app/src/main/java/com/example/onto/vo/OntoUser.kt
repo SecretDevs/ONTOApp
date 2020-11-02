@@ -10,5 +10,6 @@ data class OntoUser(
     @field:Json(name = "last_name") val lastName: String,
     val phone: String,
     val email: String,
-    val address: OntoAddress
+    val address: OntoAddress,
+    val pet: OntoPet
 )

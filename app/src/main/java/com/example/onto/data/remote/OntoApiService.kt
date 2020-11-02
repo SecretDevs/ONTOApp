@@ -14,8 +14,8 @@ interface OntoApiService {
     @GET("products")
     suspend fun getProducts(): Response<OntoResponse<ProductsData>>
 
-    @GET("product_info/{product_id}")
-    suspend fun getProductById(@Path("product_id") productId: Long): Response<OntoResponse<OntoProduct>>
+    @GET("product_info")
+    suspend fun getProductById(): Response<OntoResponse<OntoProduct>>
 
     @GET("offers")
     suspend fun getOffers(): Response<OntoResponse<OffersData>>
@@ -26,6 +26,6 @@ interface OntoApiService {
     @GET("points")
     suspend fun getPoints(): OntoResponse<PointsData>
 
-    @GET("user/{user_id}")
-    suspend fun getUserById(@Path("user_id") userId: Long): OntoResponse<OntoUser>
+    @GET("user")
+    suspend fun getUserById(): Response<OntoResponse<OntoUser>>
 }

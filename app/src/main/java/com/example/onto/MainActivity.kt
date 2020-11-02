@@ -3,16 +3,22 @@ package com.example.onto
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.onto.discount.DiscountFragment
 import com.example.onto.maps.MapsFragment
 import com.example.onto.materials.MaterialsFragment
 import com.example.onto.products.ProductsFragment
+import com.example.onto.profile.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val hideBottomNavigationCallback = {
+        bottom_navigation.isVisible = !bottom_navigation.isVisible
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +70,15 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 R.id.page_user -> {
-                    false
+                    if (LAST_ITEM != R.id.page_user) {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, ProfileFragment())
+                            .commitAllowingStateLoss()
+                        LAST_ITEM = it.itemId
+                        true
+                    } else {
+                        false
+                    }
                 }
                 else -> {
                     Timber.e("Unknown item id ${it.itemId}")
@@ -74,7 +88,14 @@ class MainActivity : AppCompatActivity() {
         }
         if (savedInstanceState == null) {
             bottom_navigation.findViewById<View>(R.id.page_shop).performClick()
+            bottom_navigation.isVisible = supportFragmentManager.backStackEntryCount == 0
+            supportFragmentManager.addOnBackStackChangedListener(hideBottomNavigationCallback)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        supportFragmentManager.removeOnBackStackChangedListener(hideBottomNavigationCallback)
     }
 
     companion object {

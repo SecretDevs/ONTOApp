@@ -24,4 +24,12 @@
     <string name="page_articles_title">Articles</string>
     <string name="page_user_title">User</string>
     <string name="shops_warning">Пожалуйста, разрешите использовать ваше местоположение , иначе мы не сможем подобрать ближайшие магазины</string>
+    <string name="fragment_profile_title">Profile</string>
+    <string name="hint_first_name">First name</string>
+    <string name="hint_last_name">Last name</string>
+    <string name="hint_example_email">example@yandex.ru</string>
+    <string name="hint_phone_number">Phone number</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_pet_name">Pet name</string>
+    <string name="add_to_card_btn_text">Add to card</string>
 </resources>

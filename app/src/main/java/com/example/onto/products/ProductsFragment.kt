@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
+import com.example.onto.product.ProductDetailsFragment
 import com.example.onto.products.recycler.ProductAdapter
 import com.example.onto.products.recycler.ProductItemDecoration
 import com.google.android.material.snackbar.Snackbar
@@ -25,7 +26,7 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
         _intentLiveData.addSource(intents) {
             _intentLiveData.value = it
         }
-    }   
+    }
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
@@ -39,7 +40,12 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
 
         productAdapter = ProductAdapter(
             onRetry = { intentLiveData.value = ProductsIntent.ReloadIntent },
-            onCLick = { }, //navigate to product details
+            onCLick = {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ProductDetailsFragment.newInstance(it))
+                    .addToBackStack(ProductDetailsFragment::class.java.name)
+                    .commitAllowingStateLoss()
+            },
             onAddToCartClick = { intentLiveData.value = ProductsIntent.AddToCartIntent(it) }
         )
         productAdapter.setHasStableIds(true)

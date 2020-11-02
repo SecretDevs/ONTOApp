@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_discounts_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_scroll_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
         style="@style/AppTheme.AppBar"
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <FrameLayout
+            android:id="@+id/appbar_content_layout"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:paddingStart="@dimen/margin_default"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:background="@color/colorPrimarySurface"
+            android:paddingStart="@dimen/margin_default">
 
             <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/appbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/offer_title"
+                android:text="@string/fragment_profile_title"
                 android:textAppearance="@style/TextAppearance.AppTheme.ToolbarTitleMain"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_gravity="center_vertical|start"/>
 
             <include
                 android:id="@+id/cart_view"
@@ -40,18 +38,27 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresher"
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/item_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/error_view"
+        layout="@layout/item_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/profile_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/discounts_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="160dp"
-            android:paddingTop="@dimen/gutter_default" />
+        <include
+            layout="@layout/fragment_profile_content"/>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
+import com.example.onto.material.MaterialDetailsFragment
 import com.example.onto.materials.recycler.MaterialAdapter
 import com.example.onto.products.recycler.ProductItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_materials.*
-import kotlinx.android.synthetic.main.fragment_materials.refresher
 
 @AndroidEntryPoint
 class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
@@ -30,15 +30,19 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
     }
 
     override fun initViews() {
-
-        //refresher.setColorSchemeResources(R.color.colorPrimary)
+        refresher.setColorSchemeResources(R.color.colorPrimary)
         refresher.setOnRefreshListener {
             intentLiveData.value = MaterialIntent.RefreshIntent
         }
 
         materialAdapter = MaterialAdapter(
             onRetry = { intentLiveData.value = MaterialIntent.ReloadIntent },
-            onCLick = { },
+            onCLick = {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, MaterialDetailsFragment.newInstance(it))
+                    .addToBackStack(MaterialDetailsFragment::class.java.name)
+                    .commitAllowingStateLoss()
+            },
         )
 
         materialAdapter.setHasStableIds(true)

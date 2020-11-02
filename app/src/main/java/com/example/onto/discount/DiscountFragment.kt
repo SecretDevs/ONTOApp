@@ -1,5 +1,7 @@
 package com.example.onto.discount
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,6 +10,7 @@ import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.products.recycler.ProductItemDecoration
 import com.example.onto.discount.recycler.DiscountAdapter
+import com.example.onto.product.ProductDetailsFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discounts.*
@@ -24,7 +27,6 @@ class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
     private lateinit var discountAdapter: DiscountAdapter
 
     private val intentLiveData = MutableLiveData<DiscountIntent>().also { intents ->
-        intents.value = DiscountIntent.InitialIntent
         _intentLiveData.addSource(intents) {
             _intentLiveData.value = it
         }
@@ -39,7 +41,12 @@ class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
 
         discountAdapter = DiscountAdapter(
             onRetry = { intentLiveData.value = DiscountIntent.ReloadIntent },
-            onCLick = { },
+            onCLick = {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, ProductDetailsFragment.newInstance(it))
+                    .addToBackStack(ProductDetailsFragment::class.java.name)
+                    .commitAllowingStateLoss()
+            },
         )
 
         discountAdapter.setHasStableIds(true)
@@ -72,6 +79,13 @@ class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
                 viewState.refreshError.localizedMessage ?: "",
                 Snackbar.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) {
+            intentLiveData.value = DiscountIntent.InitialIntent
         }
     }
 }

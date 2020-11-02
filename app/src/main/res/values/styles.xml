@@ -73,6 +73,28 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorOnSurface">@color/colorGray</item>
     </style>
+    <style name="AppTheme.TextInputEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">@dimen/margin_default</item>
+    </style>
+
+    <style name="AppTheme.OverlayTextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText">
+        <item name="editTextStyle">@style/AppTheme.TextInputEditText</item>
+        <item name="colorControlActivated">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="AppTheme.EditTextLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="boxBackgroundColor">@color/colorPrimarySurface</item>
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="hintEnabled">false</item>
+        <item name="shapeAppearance">@style/AppTheme.EditLayoutShape</item>
+        <item name="materialThemeOverlay">@style/AppTheme.OverlayTextInputEditText</item>
+    </style>
+
+    <style name="AppTheme.EditLayoutShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
 
     <style name="AppTheme.CircleImageView" parent="">
         <item name="cornerFamily">rounded</item>

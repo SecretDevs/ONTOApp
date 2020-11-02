@@ -9,7 +9,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.AppTheme.ToolbarTitleMain" parent="TextAppearance.AppTheme.Subtitle1">
+    <style name="TextAppearance.AppTheme.ToolbarTitleMain" parent="TextAppearance.AppTheme.Headline6">
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>
 
@@ -23,6 +23,30 @@
 
     <style name="TextAppearance.AppTheme.BadgeText" parent="TextAppearance.AppTheme.Caption">
         <item name="android:textColor">@color/colorOnBadge</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ProductInfo" parent="TextAppearance.AppTheme.Body1">
+        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ProductPrice" parent="TextAppearance.AppTheme.Body1">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ProductDescription" parent="TextAppearance.AppTheme.Body2">
+        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ArticleName" parent="TextAppearance.AppTheme.Subtitle1">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ArticleDate" parent="TextAppearance.AppTheme.Body1">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ArticleBody" parent="TextAppearance.AppTheme.Body2">
+        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
     </style>
 
 </resources>

@@ -6,15 +6,15 @@ import com.example.onto.vo.OntoProduct
 import timber.log.Timber
 import javax.inject.Inject
 
-interface ProductsRepository {
+interface ProductsDataSource {
     suspend fun getProducts(): Result<List<OntoProduct>>
     suspend fun getFilteredProducts(tagIds: List<Long>): Result<List<OntoProduct>>
     suspend fun getProductById(productId: Long): Result<OntoProduct>
 }
 
-class RemoteProductsRepository @Inject constructor(
+class RemoteProductsDataSource @Inject constructor(
     private val service: OntoApiService
-) : ProductsRepository {
+) : ProductsDataSource {
     override suspend fun getProducts(): Result<List<OntoProduct>> {
         return try {
             val response = service.getProducts()
@@ -36,7 +36,7 @@ class RemoteProductsRepository @Inject constructor(
 
     override suspend fun getProductById(productId: Long): Result<OntoProduct> {
         return try {
-            val response = service.getProductById(productId)
+            val response = service.getProductById()
             if (response.isSuccessful && response.body() != null) {
                 Result.Success(response.body()!!.data)
             } else {
