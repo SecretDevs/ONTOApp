@@ -38,7 +38,11 @@ class ProductsViewModel @ViewModelInject constructor(
                 throw UnsupportedOperationException("API is not realized yet")
             }
             is ProductsAction.AddToCartAction -> {
-                throw UnsupportedOperationException("API is not realized yet")
+                addIntermediateEffect(ProductsEffect.RefreshLoadingEffect)
+                when (val result = productsUseCase.getProducts(emptyList())) {
+                    is Result.Success -> ProductsEffect.ProductsLoadedEffect(result.data)
+                    is Result.Error -> ProductsEffect.RefreshLoadingErrorEffect(result.throwable)
+                }
             }
         }
 
