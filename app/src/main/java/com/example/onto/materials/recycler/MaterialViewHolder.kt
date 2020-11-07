@@ -3,9 +3,11 @@ package com.example.onto.materials.recycler
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.isInvisible
+import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.recycler.DataViewHolder
 import com.example.onto.vo.OntoArticle
+import com.google.android.material.imageview.ShapeableImageView
 import java.lang.IllegalArgumentException
 
 class MaterialViewHolder(
@@ -14,7 +16,8 @@ class MaterialViewHolder(
 
 ) : DataViewHolder<OntoArticle>(view) {
     private val name = view.findViewById<TextView>(R.id.item_material_name)
-    private val date = view.findViewById<TextView>(R.id.item_material_date)
+    private val image = view.findViewById<ShapeableImageView>(R.id.item_material_image)
+
     private lateinit var data: OntoArticle
 
     init {
@@ -25,15 +28,15 @@ class MaterialViewHolder(
         this.data = data
 
         name.text = data.name
-        try {
-            date.text = data.date.substring(0,10)
-        }
-        catch (e :IndexOutOfBoundsException){
-            date.isInvisible
-        }
+
+        Glide.with(image)
+            .load(data.image)
+            .into(image)
+
     }
 
 
     fun clear() {
-         }
+        Glide.with(image).clear(image)
+    }
 }

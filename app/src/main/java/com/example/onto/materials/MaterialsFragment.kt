@@ -3,6 +3,7 @@ package com.example.onto.materials
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
@@ -53,7 +54,7 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
                 resources.getDimensionPixelSize(R.dimen.gutter_default)
             )
         )
-        materials_recycler.layoutManager = LinearLayoutManager(context)
+        materials_recycler.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
     }
 
     override fun render(viewState: MaterialViewState) {

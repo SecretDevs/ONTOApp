@@ -5,41 +5,41 @@
     android:id="@+id/item_product_card"
     style="@style/AppTheme.ProductCard"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="150dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/item_material_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:gravity="center"
-            android:textSize="10sp"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/item_material_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0"
+            app:shapeAppearanceOverlay="@style/AppTheme.SmoothCornerView"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/item_material_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="Здесь будет заголовок"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
