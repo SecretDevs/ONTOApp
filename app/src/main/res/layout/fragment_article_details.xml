@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/article_details_scroll_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:foregroundTint="#FFFFFF">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/material_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="15dp"
+        android:backgroundTint="#A6EC56"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:rippleColor="#FFFFFF"
+        app:srcCompat="@android:drawable/arrow_up_float" />
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/AppTheme.AppBar"
         android:id="@+id/appbar_layout"
+        style="@style/AppTheme.AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -49,10 +61,10 @@
         android:id="@+id/article_details_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="#8BC34A"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <include
-            layout="@layout/fragment_article_details_content"/>
+        <include layout="@layout/fragment_article_details_content" />
 
     </androidx.core.widget.NestedScrollView>
 

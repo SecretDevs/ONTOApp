@@ -26,6 +26,10 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
         arrow_back_btn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        material_fab.setOnClickListener{
+            article_details_content.scrollTo(0,0)
+        }
         retry_button.setOnClickListener {
             _intentLiveData.value = MaterialDetailsIntent.ReloadIntent(getArticleId())
         }
