@@ -49,4 +49,18 @@
         <item name="android:textColor">@color/colorOnSurfaceMedium</item>
     </style>
 
+    <style name="TextAppearance.AppTheme.ShopWindowTitle" parent="TextAppearance.AppTheme.Subtitle1">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ShopWindowBody" parent="TextAppearance.AppTheme.Body2">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ShopWindowDay" parent="TextAppearance.AppTheme.Body2">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

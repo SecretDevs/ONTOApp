@@ -19,6 +19,9 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsViewState, ProductDeta
         get() = R.layout.fragment_product_details
     override val viewModel: ProductDetailsViewModel by viewModels()
 
+    override fun initialIntent(): ProductDetailsIntent? =
+        ProductDetailsIntent.InitialIntent(getProductId())
+
     override fun initViews() {
         arrow_back_btn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -50,14 +53,6 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsViewState, ProductDeta
                 )
             product_details_description.text = viewState.product.description
             add_to_cart_btn.isEnabled = viewState.product.isInStock
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            _intentLiveData.value =
-                ProductDetailsIntent.InitialIntent(getProductId())
         }
     }
 

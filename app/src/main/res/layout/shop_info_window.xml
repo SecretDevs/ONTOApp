@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.MarkerWindowCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="192dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/shop_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ONTO pet food" />
+
+        <TextView
+            android:id="@+id/shop_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_title"
+            tools:text="Москва, ул. Ленина 1, 3 этаж" />
+
+        <TextView
+            android:id="@+id/shop_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_address"
+            tools:text="+7 999 678 54 34" />
+
+        <TextView
+            android:id="@+id/shop_monday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:text="@string/monday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_phone" />
+
+        <TextView
+            android:id="@+id/shop_monday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_monday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_monday_abbr"
+            tools:text="09:00 - 21:00" />
+
+        <TextView
+            android:id="@+id/shop_tuesday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:text="@string/tuesday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_monday_abbr" />
+
+        <TextView
+            android:id="@+id/shop_tuesday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_tuesday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_tuesday_abbr"
+            tools:text="09:00 - 21:00" />
+
+        <TextView
+            android:id="@+id/shop_wednesday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:text="@string/wednesday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_tuesday_abbr" />
+
+        <TextView
+            android:id="@+id/shop_wednesday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_wednesday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_wednesday_abbr"
+            tools:text="09:00 - 21:00" />
+
+        <TextView
+            android:id="@+id/shop_thursday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:text="@string/thursday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_wednesday_abbr" />
+
+        <TextView
+            android:id="@+id/shop_thursday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_thursday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_thursday_abbr"
+            tools:text="09:00 - 21:00" />
+
+        <TextView
+            android:id="@+id/shop_friday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:text="@string/friday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_thursday_abbr" />
+
+        <TextView
+            android:id="@+id/shop_friday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_friday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_friday_abbr"
+            tools:text="09:00 - 21:00" />
+
+        <TextView
+            android:id="@+id/shop_saturday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:fontFamily="monospace"
+            android:text="@string/saturday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_friday_abbr" />
+
+        <TextView
+            android:id="@+id/shop_saturday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_saturday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_saturday_abbr"
+            tools:text="09:00 - 21:00" />
+
+        <TextView
+            android:id="@+id/shop_sunday_abbr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="@dimen/margin_default"
+            android:fontFamily="monospace"
+            android:text="@string/sunday_abbr"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowDay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shop_saturday_abbr" />
+
+        <TextView
+            android:id="@+id/shop_sunday_hours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ShopWindowBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shop_sunday_abbr"
+            app:layout_constraintTop_toTopOf="@+id/shop_sunday_abbr"
+            tools:text="09:00 - 21:00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

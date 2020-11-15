@@ -1,7 +1,5 @@
 package com.example.onto.products
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -27,6 +25,8 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
             _intentLiveData.value = it
         }
     }
+    
+    override fun initialIntent(): ProductsIntent? = ProductsIntent.InitialIntent
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
@@ -83,10 +83,4 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            intentLiveData.value = ProductsIntent.InitialIntent
-        }
-    }
 }

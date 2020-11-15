@@ -2,7 +2,6 @@ package com.example.onto.materials
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
@@ -24,11 +23,12 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
     private lateinit var materialAdapter: MaterialAdapter
 
     private val intentLiveData = MutableLiveData<MaterialIntent>().also { intents ->
-        intents.value = MaterialIntent.InitialIntent
         _intentLiveData.addSource(intents) {
             _intentLiveData.value = it
         }
     }
+
+    override fun initialIntent(): MaterialIntent? = MaterialIntent.InitialIntent
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
@@ -54,7 +54,8 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
                 resources.getDimensionPixelSize(R.dimen.gutter_default)
             )
         )
-        materials_recycler.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+        materials_recycler.layoutManager =
+            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
     }
 
     override fun render(viewState: MaterialViewState) {
@@ -78,4 +79,5 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
             ).show()
         }
     }
+
 }

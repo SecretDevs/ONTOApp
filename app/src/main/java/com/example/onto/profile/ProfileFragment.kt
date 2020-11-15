@@ -1,7 +1,5 @@
 package com.example.onto.profile
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.onto.R
@@ -16,6 +14,8 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
+
+    override fun initialIntent(): ProfileIntent? = ProfileIntent.InitialIntent
 
     override fun initViews() {
         retry_button.setOnClickListener {
@@ -40,10 +40,4 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            _intentLiveData.value = ProfileIntent.InitialIntent
-        }
-    }
 }

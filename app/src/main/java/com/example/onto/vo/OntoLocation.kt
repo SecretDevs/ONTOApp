@@ -5,6 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class OntoLocation(
-    @field:Json(name = "lat") val latitude: Float,
-    @field:Json(name = "long") val longitude: Float
+    @field:Json(name = "lat") val latitude: Double,
+    @field:Json(name = "long") val longitude: Double
 )

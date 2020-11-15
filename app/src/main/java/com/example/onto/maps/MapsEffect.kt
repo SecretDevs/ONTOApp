@@ -5,7 +5,7 @@ import com.example.onto.vo.OntoShop
 
 sealed class MapsEffect : MviEffect {
 
-    object PermissionsCheckEffect : MapsEffect()
+    object MapLoadedEffect : MapsEffect()
 
     object InitialLoadingEffect : MapsEffect()
 
@@ -16,4 +16,9 @@ sealed class MapsEffect : MviEffect {
     data class ShopsLoadedEffect(
         val shops: List<OntoShop>
     ) : MapsEffect()
+
+    data class ShowShopInfoEffect(
+        val shop: Pair<Double, Double>
+    ) : MapsEffect()
+
 }

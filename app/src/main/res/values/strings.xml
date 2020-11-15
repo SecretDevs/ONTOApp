@@ -32,4 +32,11 @@
     <string name="hint_address">Address</string>
     <string name="hint_pet_name">Pet name</string>
     <string name="add_to_card_btn_text">Add to card</string>
+    <string name="monday_abbr">Mon</string>
+    <string name="tuesday_abbr">Tue</string>
+    <string name="wednesday_abbr">Wed</string>
+    <string name="thursday_abbr">Thu</string>
+    <string name="friday_abbr">Fri</string>
+    <string name="saturday_abbr">Sat</string>
+    <string name="sunday_abbr">Sun</string>
 </resources>

@@ -22,13 +22,16 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
         get() = R.layout.fragment_article_details
     override val viewModel: MaterialDetailsViewModel by viewModels()
 
+    override fun initialIntent(): MaterialDetailsIntent? =
+        MaterialDetailsIntent.InitialIntent(getArticleId())
+
     override fun initViews() {
         arrow_back_btn.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        material_fab.setOnClickListener{
-            article_details_content.scrollTo(0,0)
+        material_fab.setOnClickListener {
+            article_details_content.scrollTo(0, 0)
         }
         retry_button.setOnClickListener {
             _intentLiveData.value = MaterialDetailsIntent.ReloadIntent(getArticleId())
@@ -47,14 +50,6 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
             article_details_name.text = viewState.article.name
             article_details_date.text = viewState.article.date.subSequence(0, 10)
             article_details_text.text = viewState.article.text
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) {
-            _intentLiveData.value =
-                MaterialDetailsIntent.InitialIntent(getArticleId())
         }
     }
 

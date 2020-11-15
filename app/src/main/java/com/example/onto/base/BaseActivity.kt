@@ -11,6 +11,7 @@ abstract class BaseActivity<
     protected abstract val layoutResourceId: Int
     protected abstract val viewModel: MviViewModel<VS, I>
 
+    protected abstract fun initialIntent(): I?
     protected abstract fun initViews()
 
     protected val _intentLiveData = MediatorLiveData<I>()
@@ -25,5 +26,8 @@ abstract class BaseActivity<
             render(it)
         }
         viewModel.processIntents(intents())
+        if (savedInstanceState == null && _intentLiveData.value == null) {
+            _intentLiveData.value = initialIntent()
+        }
     }
 }
