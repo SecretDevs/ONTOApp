@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onto.R
 import com.example.onto.base.recycler.BaseStateAdapter
-import com.example.onto.vo.OntoProduct
+import com.example.onto.vo.inapp.OntoProduct
 
 class ProductAdapter(
     onRetry: () -> Unit,

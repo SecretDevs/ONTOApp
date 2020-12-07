@@ -7,8 +7,8 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/AppTheme.AppBar"
         android:id="@+id/appbar_layout"
+        style="@style/AppTheme.AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,7 +16,8 @@
             android:id="@+id/appbar_content_layout"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:background="@color/colorPrimarySurface">
+            android:background="@color/colorPrimarySurface"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlways">
 
             <ImageView
                 android:id="@+id/arrow_back_btn"
@@ -30,14 +31,45 @@
 
             <TextView
                 android:id="@+id/appbar_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:text="@string/fragment_product_details_title"
                 android:textAppearance="@style/TextAppearance.AppTheme.ToolbarTitleMain"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cart_btn"
                 app:layout_constraintStart_toEndOf="@+id/arrow_back_btn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/cart_btn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:padding="4dp"
+                android:src="@drawable/ic_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cart_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/badge_background"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:textAppearance="@style/TextAppearance.AppTheme.BadgeText"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@tools:sample/lorem"/>
+                tools:text="2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,28 +93,76 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <include
-            layout="@layout/fragment_product_details_content"/>
+        <include layout="@layout/fragment_product_details_content" />
 
     </androidx.core.widget.NestedScrollView>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_to_cart_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="68dp"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimarySurface">
+        android:background="@color/colorPrimarySurface"
+        android:elevation="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/product_details_minus_btn"
+            style="@style/AppTheme.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            app:icon="@drawable/ic_minus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/product_details_quantity"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/product_details_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppTheme.ItemProductPriceText"
+            app:layout_constraintBottom_toBottomOf="@+id/product_details_minus_btn"
+            app:layout_constraintEnd_toStartOf="@+id/product_details_plus_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/product_details_minus_btn"
+            app:layout_constraintTop_toTopOf="@+id/product_details_minus_btn"
+            tools:text="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/product_details_plus_btn"
+            style="@style/AppTheme.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_default"
+            app:icon="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@+id/product_details_minus_btn"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/product_details_quantity"
+            app:layout_constraintTop_toTopOf="@+id/product_details_minus_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_to_cart_btn"
-            android:layout_width="match_parent"
+            style="@style/AppTheme.Button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
-            android:text="@string/add_to_card_btn_text"
-            app:backgroundTint="@color/colorPrimary"/>
+            android:layout_marginEnd="24dp"
+            android:text="@string/add_to_cart_btn_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

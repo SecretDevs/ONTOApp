@@ -1,7 +1,8 @@
 package com.example.onto.discount
 
 import com.example.onto.base.MviEffect
-import com.example.onto.vo.OntoOffer
+import com.example.onto.vo.inapp.CartInformation
+import com.example.onto.vo.remote.OntoOffer
 
 sealed class DiscountEffect : MviEffect {
     object InitialLoadingEffect : DiscountEffect()
@@ -19,4 +20,11 @@ sealed class DiscountEffect : MviEffect {
     data class RefreshLoadingErrorEffect(
         val throwable: Throwable
     ) : DiscountEffect()
+
+    data class CartInformationLoadedEffect(
+        val cartInformation: CartInformation?
+    ) : DiscountEffect()
+
+    object NoEffect : DiscountEffect()
+
 }

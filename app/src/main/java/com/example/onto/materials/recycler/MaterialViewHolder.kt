@@ -1,22 +1,17 @@
 package com.example.onto.materials.recycler
 
 import android.view.View
-import android.widget.TextView
-import androidx.core.view.isInvisible
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.recycler.DataViewHolder
-import com.example.onto.vo.OntoArticle
-import com.google.android.material.imageview.ShapeableImageView
-import java.lang.IllegalArgumentException
+import com.example.onto.vo.remote.OntoArticle
+import kotlinx.android.synthetic.main.item_material.view.*
 
 class MaterialViewHolder(
-    view: View,
+    private val view: View,
     private val onClick: (Long) -> Unit,
-
 ) : DataViewHolder<OntoArticle>(view) {
-    private val name = view.findViewById<TextView>(R.id.item_material_name)
-    private val image = view.findViewById<ShapeableImageView>(R.id.item_material_image)
 
     private lateinit var data: OntoArticle
 
@@ -25,18 +20,24 @@ class MaterialViewHolder(
     }
 
     override fun bindData(data: OntoArticle) {
+        throw UnsupportedOperationException("Wrong realization!")
+    }
+
+    fun bindData(data: OntoArticle, isFullSpan: Boolean) {
+        (view.item_material_image.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio =
+            if (isFullSpan) "2:1" else "1:1"
         this.data = data
 
-        name.text = data.name
+        view.item_material_name.text = data.name
 
-        Glide.with(image)
+        Glide.with(view.item_material_image)
             .load(data.image)
-            .into(image)
-
+            .into(view.item_material_image)
+        view.elevation = view.resources.getDimension(R.dimen.gutter_default)
     }
 
 
     fun clear() {
-        Glide.with(image).clear(image)
+        Glide.with(view.item_material_image).clear(view.item_material_image)
     }
 }

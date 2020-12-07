@@ -1,7 +1,7 @@
 package com.example.onto.material
 
 import com.example.onto.base.MviEffect
-import com.example.onto.vo.OntoArticle
+import com.example.onto.vo.remote.OntoArticle
 
 sealed class MaterialDetailsEffect : MviEffect {
 
@@ -14,5 +14,7 @@ sealed class MaterialDetailsEffect : MviEffect {
     data class MaterialDetailsLoadedEffect(
         val material: OntoArticle
     ) : MaterialDetailsEffect()
+
+    object NoEffect : MaterialDetailsEffect()
 
 }

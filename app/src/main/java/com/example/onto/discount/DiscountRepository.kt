@@ -2,7 +2,7 @@ package com.example.onto.discount
 
 import com.example.onto.data.remote.OntoApiService
 import com.example.onto.utils.Result
-import com.example.onto.vo.OntoOffer
+import com.example.onto.vo.remote.OntoOffer
 import javax.inject.Inject
 
 class DiscountRepository @Inject  constructor(private val apiService: OntoApiService) {

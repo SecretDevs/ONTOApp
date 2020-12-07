@@ -17,13 +17,47 @@ enum class RecyclerState(val viewType: Int) {
 abstract class BaseStateAdapter<T, VH : DataViewHolder<T>>(
     private val onRetry: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val dataList: MutableList<T> = mutableListOf()
+    protected val dataList: MutableList<T> = mutableListOf()
     private var state = RecyclerState.LOADING
 
     protected abstract fun getDataViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup
     ): VH
+
+    protected open fun getLoadingViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder = EmptyViewHolder(
+        inflater.inflate(
+            R.layout.item_loading,
+            parent,
+            false
+        )
+    )
+
+    protected open fun getEmptyViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder = EmptyViewHolder(
+        inflater.inflate(
+            R.layout.item_empty,
+            parent,
+            false
+        )
+    )
+
+    protected open fun getErrorViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder = ErrorViewHolder(
+        inflater.inflate(
+            R.layout.item_error,
+            parent,
+            false
+        ),
+        onRetry
+    )
 
     fun updateData(newData: List<T>, state: RecyclerState) {
         dataList.clear()
@@ -41,28 +75,9 @@ abstract class BaseStateAdapter<T, VH : DataViewHolder<T>>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (state) {
-            RecyclerState.LOADING -> EmptyViewHolder(
-                layoutInflater.inflate(
-                    R.layout.item_loading,
-                    parent,
-                    false
-                )
-            )
-            RecyclerState.ERROR -> ErrorViewHolder(
-                layoutInflater.inflate(
-                    R.layout.item_error,
-                    parent,
-                    false
-                ),
-                onRetry
-            )
-            RecyclerState.EMPTY -> EmptyViewHolder(
-                layoutInflater.inflate(
-                    R.layout.item_empty,
-                    parent,
-                    false
-                )
-            )
+            RecyclerState.LOADING -> getLoadingViewHolder(layoutInflater, parent)
+            RecyclerState.ERROR -> getErrorViewHolder(layoutInflater, parent)
+            RecyclerState.EMPTY -> getEmptyViewHolder(layoutInflater, parent)
             RecyclerState.ITEM -> getDataViewHolder(layoutInflater, parent)
         }
     }

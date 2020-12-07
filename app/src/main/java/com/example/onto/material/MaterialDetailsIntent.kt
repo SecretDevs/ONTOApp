@@ -1,6 +1,7 @@
 package com.example.onto.material
 
 import com.example.onto.base.MviIntent
+import com.example.onto.base.NothingIntent
 
 sealed class MaterialDetailsIntent : MviIntent {
 
@@ -11,5 +12,9 @@ sealed class MaterialDetailsIntent : MviIntent {
     data class ReloadIntent(
         val articleId: Long
     ) : MaterialDetailsIntent()
+
+    object GoBackIntent : MaterialDetailsIntent()
+
+    object MaterialDetailsNothingIntent : MaterialDetailsIntent(), NothingIntent
 
 }

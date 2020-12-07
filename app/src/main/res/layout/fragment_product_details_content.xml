@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="76dp">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/product_details_image"
@@ -22,42 +22,156 @@
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/product_details_info"
+        android:id="@+id/product_details_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
-        android:layout_marginTop="@dimen/margin_default"
         android:layout_marginEnd="@dimen/margin_default"
-        android:textAppearance="@style/TextAppearance.AppTheme.ProductInfo"
+        android:maxLines="@integer/product_details_title_line_count"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_details_image"
-        tools:text="@tools:sample/lorem" />
+        app:layout_constraintStart_toEndOf="@+id/product_details_image"
+        app:layout_constraintTop_toTopOf="@+id/product_details_image"
+        tools:text="Туркменский таракан консервированный ONTO" />
 
     <TextView
-        android:id="@+id/product_details_price"
+        android:id="@+id/product_details_protein_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/product_details_protein"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintStart_toStartOf="@+id/product_details_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_title" />
+
+    <TextView
+        android:id="@+id/product_details_protein_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginStart="@dimen/gutter_default"
         android:layout_marginEnd="@dimen/margin_default"
-        android:textAppearance="@style/TextAppearance.AppTheme.ProductPrice"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintBottom_toBottomOf="@+id/product_details_protein_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_details_info"
-        tools:text="200" />
+        app:layout_constraintStart_toEndOf="@+id/product_details_protein_title"
+        app:layout_constraintTop_toTopOf="@+id/product_details_protein_title"
+        tools:text="15" />
+
+    <TextView
+        android:id="@+id/product_details_fat_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_details_fat"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintStart_toStartOf="@+id/product_details_protein_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_protein_title" />
+
+    <TextView
+        android:id="@+id/product_details_fat_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintBottom_toBottomOf="@+id/product_details_fat_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/product_details_fat_title"
+        app:layout_constraintTop_toTopOf="@+id/product_details_fat_title"
+        tools:text="9" />
+
+    <TextView
+        android:id="@+id/product_details_carbon_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_details_carbonhydrate"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintStart_toStartOf="@+id/product_details_fat_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_fat_title" />
+
+    <TextView
+        android:id="@+id/product_details_carbon_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintBottom_toBottomOf="@+id/product_details_carbon_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/product_details_carbon_title"
+        app:layout_constraintTop_toTopOf="@+id/product_details_carbon_title"
+        tools:text="0.4" />
+
+    <TextView
+        android:id="@+id/product_details_kcal_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_details_kcal"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintStart_toStartOf="@+id/product_details_carbon_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_carbon_title" />
+
+    <TextView
+        android:id="@+id/product_details_kcal_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintBottom_toBottomOf="@+id/product_details_kcal_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/product_details_kcal_title"
+        app:layout_constraintTop_toTopOf="@+id/product_details_kcal_title"
+        tools:text="186" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#F1F1F1"
+        app:layout_constraintBottom_toTopOf="@+id/product_details_price_value"
+        app:layout_constraintEnd_toEndOf="@+id/product_details_price_value"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_kcal_value" />
+
+    <TextView
+        android:id="@+id/product_details_price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_details_price"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        app:layout_constraintBottom_toBottomOf="@+id/product_details_price_value"
+        app:layout_constraintStart_toStartOf="@+id/product_details_kcal_title" />
+
+    <TextView
+        android:id="@+id/product_details_price_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsPrice"
+        app:layout_constraintBottom_toBottomOf="@+id/product_details_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/product_details_price_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_kcal_value"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="275 ₽" />
 
     <TextView
         android:id="@+id/product_details_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_default"
         android:layout_marginEnd="@dimen/margin_default"
-        android:textAppearance="@style/TextAppearance.AppTheme.ProductDescription"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="84dp"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_details_price"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_price_value"
         tools:text="@tools:sample/lorem/random" />
 
     <androidx.constraintlayout.widget.Guideline

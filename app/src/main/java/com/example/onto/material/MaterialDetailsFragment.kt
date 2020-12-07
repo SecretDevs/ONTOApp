@@ -1,7 +1,6 @@
 package com.example.onto.material
 
 import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -14,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_product_details.arrow_back_btn
 import kotlinx.android.synthetic.main.fragment_product_details.error_view
 import kotlinx.android.synthetic.main.fragment_product_details.loading_view
 import kotlinx.android.synthetic.main.item_error.*
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialDetailsIntent>() {
@@ -22,16 +20,19 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
         get() = R.layout.fragment_article_details
     override val viewModel: MaterialDetailsViewModel by viewModels()
 
+    override fun backStackIntent(): MaterialDetailsIntent =
+        MaterialDetailsIntent.MaterialDetailsNothingIntent
+
     override fun initialIntent(): MaterialDetailsIntent? =
         MaterialDetailsIntent.InitialIntent(getArticleId())
 
     override fun initViews() {
         arrow_back_btn.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            _intentLiveData.value = MaterialDetailsIntent.GoBackIntent
         }
 
-        material_fab.setOnClickListener {
-            article_details_content.scrollTo(0, 0)
+        top_article_fab.setOnClickListener {
+            article_details_content.smoothScrollTo(0, 0)
         }
         retry_button.setOnClickListener {
             _intentLiveData.value = MaterialDetailsIntent.ReloadIntent(getArticleId())
@@ -56,7 +57,6 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
     private fun getArticleId() = arguments?.getLong(ARTICLE_ID_KEY) ?: 0L
 
     companion object {
-        private val priceFormat = DecimalFormat("#.##")
         private const val ARTICLE_ID_KEY = "article_id"
 
         fun newInstance(articleId: Long): MaterialDetailsFragment =

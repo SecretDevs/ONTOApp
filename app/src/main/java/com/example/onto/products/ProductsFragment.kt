@@ -1,12 +1,11 @@
 package com.example.onto.products
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
-import com.example.onto.product.ProductDetailsFragment
 import com.example.onto.products.recycler.ProductAdapter
 import com.example.onto.products.recycler.ProductItemDecoration
 import com.google.android.material.snackbar.Snackbar
@@ -20,33 +19,25 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
     override val viewModel: ProductsViewModel by viewModels()
 
     private lateinit var productAdapter: ProductAdapter
-    private val intentLiveData = MutableLiveData<ProductsIntent>().also { intents ->
-        _intentLiveData.addSource(intents) {
-            _intentLiveData.value = it
-        }
-    }
-    
+
     override fun initialIntent(): ProductsIntent? = ProductsIntent.InitialIntent
+
+    override fun backStackIntent(): ProductsIntent = ProductsIntent.ProductsNothingIntent
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
         refresher.setOnRefreshListener {
-            intentLiveData.value = ProductsIntent.RefreshIntent
+            _intentLiveData.value = ProductsIntent.RefreshIntent
         }
 
-        cart_view.setOnClickListener {
-            //navigate to cart
+        cart_btn.setOnClickListener {
+            _intentLiveData.value = ProductsIntent.OpenCartIntent
         }
 
         productAdapter = ProductAdapter(
-            onRetry = { intentLiveData.value = ProductsIntent.ReloadIntent },
-            onCLick = {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ProductDetailsFragment.newInstance(it))
-                    .addToBackStack(ProductDetailsFragment::class.java.name)
-                    .commitAllowingStateLoss()
-            },
-            onAddToCartClick = { intentLiveData.value = ProductsIntent.AddToCartIntent(it) }
+            onRetry = { _intentLiveData.value = ProductsIntent.ReloadIntent },
+            onCLick = { _intentLiveData.value = ProductsIntent.OpenProductDetailsIntent(it) },
+            onAddToCartClick = { _intentLiveData.value = ProductsIntent.AddToCartIntent(it) }
         )
         productAdapter.setHasStableIds(true)
 
@@ -69,6 +60,8 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
             else -> RecyclerState.ITEM
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
+        cart_badge.isVisible = viewState.cartInfo != null && viewState.cartInfo.count != 0
+        cart_badge.text = viewState.cartInfo?.count?.toString()
 
         refresher.isEnabled = isRefreshable
         refresher.isRefreshing = viewState.isRefreshLoading

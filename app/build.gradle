@@ -53,10 +53,8 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     //maps
-    implementation "com.google.android.gms:play-services-maps:$maps_version"
     implementation "com.google.android.libraries.places:places:2.4.0"
     implementation "com.google.android.libraries.maps:maps:3.1.0-beta"
-
 
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -64,6 +62,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

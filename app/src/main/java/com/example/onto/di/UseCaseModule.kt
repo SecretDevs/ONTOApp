@@ -1,36 +1,37 @@
 package com.example.onto.di
 
-import com.example.onto.product.ProductDetailsUseCase
-import com.example.onto.product.ProductDetailsUseCaseImpl
-import com.example.onto.products.ProductsDataSource
-import com.example.onto.products.ProductsUseCase
-import com.example.onto.products.ProductsUseCaseImpl
-import com.example.onto.profile.ProfileDataSource
-import com.example.onto.profile.ProfileUseCase
-import com.example.onto.profile.ProfileUseCaseImpl
+import com.example.onto.data.usecase.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.components.ActivityComponent
 
 @Module
-@InstallIn(
-    ApplicationComponent::class
-)
-object UseCaseModule {
-    @Provides
-    fun provideProductsUseCase(
-        @RemoteDataSource remoteProductsDataSource: ProductsDataSource
-    ): ProductsUseCase = ProductsUseCaseImpl(remoteProductsDataSource)
+@InstallIn(ActivityComponent::class)
+abstract class UseCaseModule {
+    @Binds
+    abstract fun provideProductsUseCase(
+        productsUseCaseImpl: ProductsUseCaseImpl
+    ): ProductsUseCase
 
-    @Provides
-    fun provideProfileUseCase(
-        @RemoteDataSource remoteProfileDataSource: ProfileDataSource
-    ): ProfileUseCase = ProfileUseCaseImpl(remoteProfileDataSource)
+    @Binds
+    abstract fun provideProfileUseCase(
+        profileUseCaseImpl: ProfileUseCaseImpl
+    ): ProfileUseCase
 
-    @Provides
-    fun provideProductDetailsUseCase(
-        @RemoteDataSource remoteProductsDataSource: ProductsDataSource
-    ): ProductDetailsUseCase = ProductDetailsUseCaseImpl(remoteProductsDataSource)
+    @Binds
+    abstract fun provideProductDetailsUseCase(
+        productDetailsUseCaseImpl: ProductDetailsUseCaseImpl
+    ): ProductDetailsUseCase
+
+    @Binds
+    abstract fun provideSharedPreferenceUseCase(
+        sharedPreferenceUseCaseImpl: SharedPreferenceUseCaseImpl
+    ): SharedPreferenceUseCase
+
+    @Binds
+    abstract fun provideCartUseCase(
+        cartUseCaseImpl: CartUseCaseImpl
+    ): CartUseCase
 
 }

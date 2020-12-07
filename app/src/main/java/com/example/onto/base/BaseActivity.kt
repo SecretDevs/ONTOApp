@@ -11,6 +11,12 @@ abstract class BaseActivity<
     protected abstract val layoutResourceId: Int
     protected abstract val viewModel: MviViewModel<VS, I>
 
+    /**
+     * Set this intent while activity in back stack.
+     * When we return to this activity, action linked to this intent will be executed.
+     * If we don't want to execute any action, pass into this function intent of type NothingIntent
+     */
+    protected abstract fun backStackIntent(): I
     protected abstract fun initialIntent(): I?
     protected abstract fun initViews()
 
@@ -30,4 +36,10 @@ abstract class BaseActivity<
             _intentLiveData.value = initialIntent()
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        _intentLiveData.value = backStackIntent()
+    }
+
 }

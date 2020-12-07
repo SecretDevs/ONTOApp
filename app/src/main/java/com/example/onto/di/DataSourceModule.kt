@@ -1,34 +1,38 @@
 package com.example.onto.di
 
-import com.example.onto.data.remote.OntoApiService
-import com.example.onto.products.ProductsDataSource
-import com.example.onto.products.RemoteProductsDataSource
-import com.example.onto.profile.ProfileDataSource
-import com.example.onto.profile.RemoteProfileDataSource
+import com.example.onto.data.datasource.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import javax.inject.Qualifier
 
 @Module
-@InstallIn(
-    ApplicationComponent::class
-)
-object DataSourceModule {
+@InstallIn(ApplicationComponent::class)
+abstract class DataSourceModule {
+    @RemoteDataSource
+    @Binds
+    abstract fun provideRemoteProductsDataSource(
+        remoteProductsDataSource: RemoteProductsDataSource
+    ): ProductsDataSource
+
+    @LocalDataSource
+    @Binds
+    abstract fun provideLocalProductsDataSource(
+        localProductsDataSource: LocalProductsDataSource
+    ): ProductsDataSource
 
     @RemoteDataSource
-    @Provides
-    fun provideRemoteProductsDataSource(
-        service: OntoApiService
-    ): ProductsDataSource = RemoteProductsDataSource(service)
+    @Binds
+    abstract fun provideRemoteProfileDataSource(
+        remoteProfileDataSource: RemoteProfileDataSource
+    ): ProfileDataSource
 
-    @RemoteDataSource
-    @Provides
-    fun provideRemoteProfileDataSource(
-        service: OntoApiService
-    ): ProfileDataSource = RemoteProfileDataSource(service)
-
+    @LocalDataSource
+    @Binds
+    abstract fun provideLocalCartDataSource(
+        localCartDataSource: LocalCartDataSource
+    ): CartDataSource
 }
 
 @Qualifier

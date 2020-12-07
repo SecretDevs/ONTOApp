@@ -10,9 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(
-    ApplicationComponent::class
-)
+@InstallIn(ApplicationComponent::class)
 object NetworkModule {
     @Provides
     @Singleton

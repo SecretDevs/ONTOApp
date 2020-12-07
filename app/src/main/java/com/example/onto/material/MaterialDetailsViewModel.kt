@@ -3,10 +3,12 @@ package com.example.onto.material
 import androidx.hilt.lifecycle.ViewModelInject
 import com.example.onto.base.BaseViewModel
 import com.example.onto.materials.MaterialsRepository
+import com.example.onto.navigation.Coordinator
 import com.example.onto.utils.Result
 
 class MaterialDetailsViewModel @ViewModelInject constructor(
-    private val materialsRepository: MaterialsRepository
+    private val materialsRepository: MaterialsRepository,
+    private val coordinator: Coordinator
 ) : BaseViewModel<MaterialDetailsViewState, MaterialDetailsEffect, MaterialDetailsIntent, MaterialDetailsAction>() {
     override fun initialState(): MaterialDetailsViewState = MaterialDetailsViewState()
 
@@ -18,6 +20,8 @@ class MaterialDetailsViewModel @ViewModelInject constructor(
             is MaterialDetailsIntent.ReloadIntent -> MaterialDetailsAction.LoadProductDetailsAction(
                 intent.articleId
             )
+            MaterialDetailsIntent.GoBackIntent -> MaterialDetailsAction.NavigateBackAction
+            MaterialDetailsIntent.MaterialDetailsNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
         }
 
     override suspend fun performAction(action: MaterialDetailsAction): MaterialDetailsEffect =
@@ -28,6 +32,10 @@ class MaterialDetailsViewModel @ViewModelInject constructor(
                     is Result.Success -> MaterialDetailsEffect.MaterialDetailsLoadedEffect(result.data[0])
                     is Result.Error -> MaterialDetailsEffect.InitialLoadingErrorEffect(result.throwable)
                 }
+            }
+            MaterialDetailsAction.NavigateBackAction -> {
+                coordinator.pop()
+                MaterialDetailsEffect.NoEffect
             }
         }
 
@@ -51,6 +59,7 @@ class MaterialDetailsViewModel @ViewModelInject constructor(
                 initialLoadingError = null,
                 article = effect.material
             )
+            MaterialDetailsEffect.NoEffect -> oldState
         }
 
 }

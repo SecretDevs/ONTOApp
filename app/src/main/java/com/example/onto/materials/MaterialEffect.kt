@@ -1,9 +1,8 @@
 package com.example.onto.materials
 
 import com.example.onto.base.MviEffect
-import com.example.onto.products.ProductsEffect
-import com.example.onto.vo.OntoArticle
-import com.example.onto.vo.OntoProduct
+import com.example.onto.vo.inapp.CartInformation
+import com.example.onto.vo.remote.OntoArticle
 
 sealed class MaterialEffect : MviEffect {
     object InitialLoadingEffect : MaterialEffect()
@@ -21,4 +20,11 @@ sealed class MaterialEffect : MviEffect {
     data class RefreshLoadingErrorEffect(
         val throwable: Throwable
     ) : MaterialEffect()
+
+    data class CartInformationLoadedEffect(
+        val cartInformation: CartInformation?
+    ) : MaterialEffect()
+
+    object NoEffect : MaterialEffect()
+
 }

@@ -6,4 +6,8 @@ sealed class ProfileAction : MviAction {
 
     object LoadProfileAction : ProfileAction()
 
+    object NavigateToQuestionAction : ProfileAction()
+
+    object NavigateToCartAction : ProfileAction()
+
 }

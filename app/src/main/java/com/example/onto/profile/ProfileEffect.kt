@@ -1,7 +1,8 @@
 package com.example.onto.profile
 
 import com.example.onto.base.MviEffect
-import com.example.onto.vo.OntoUser
+import com.example.onto.vo.inapp.CartInformation
+import com.example.onto.vo.remote.OntoUser
 
 sealed class ProfileEffect : MviEffect {
 
@@ -14,5 +15,11 @@ sealed class ProfileEffect : MviEffect {
     data class UserLoadedEffect(
         val user: OntoUser
     ) : ProfileEffect()
+
+    data class CartInformationLoaded(
+        val cartInformation: CartInformation?
+    ) : ProfileEffect()
+
+    object NoEffect : ProfileEffect()
 
 }

@@ -1,9 +1,9 @@
 package com.example.onto.maps
 
+import android.util.Log
 import com.example.onto.data.remote.OntoApiService
 import com.example.onto.utils.Result
-import com.example.onto.vo.OntoShop
-import timber.log.Timber
+import com.example.onto.vo.remote.OntoShop
 import javax.inject.Inject
 
 
@@ -11,16 +11,16 @@ class MapsRepository @Inject constructor(
     private val apiService: OntoApiService
 ) {
     suspend fun getShops(): Result<List<OntoShop>> {
-        return try {
+        try {
             val response = apiService.getShops()
-            if (response.isSuccessful && response.body() != null) {
+            return if (response.isSuccessful && response.body() != null) {
                 Result.Success(response.body()!!.data.shops)
             } else {
                 Result.Error(Throwable(response.message()))
             }
         } catch (e: Exception) {
-            Timber.e(e)
-            Result.Error(e)
+            Log.d("Shops", e.message!!)
+            return Result.Error(e)
         }
     }
 }

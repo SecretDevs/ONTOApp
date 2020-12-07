@@ -5,8 +5,16 @@
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>
 
-    <style name="TextAppearance.AppTheme.ItemProductPriceText" parent="TextAppearance.AppTheme.Body2">
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="TextAppearance.AppTheme.ItemProductPriceText" parent="">
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ItemDiscountPriceText" parent="">
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextAppearance.AppTheme.ToolbarTitleMain" parent="TextAppearance.AppTheme.Headline6">
@@ -18,23 +26,26 @@
     </style>
 
     <style name="TextAppearance.AppTheme.Button.OnPrimary" parent="TextAppearance.AppTheme.Button">
-        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
     </style>
 
     <style name="TextAppearance.AppTheme.BadgeText" parent="TextAppearance.AppTheme.Caption">
         <item name="android:textColor">@color/colorOnBadge</item>
     </style>
 
-    <style name="TextAppearance.AppTheme.ProductInfo" parent="TextAppearance.AppTheme.Body1">
+    <style name="TextAppearance.AppTheme.ProductDetailsTitle" parent="TextAppearance.AppTheme.Body1">
+        <item name="fontFamily">@font/open_sans</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ProductDetailsBody" parent="TextAppearance.AppTheme.Body2">
         <item name="android:textColor">@color/colorOnSurfaceMedium</item>
     </style>
 
-    <style name="TextAppearance.AppTheme.ProductPrice" parent="TextAppearance.AppTheme.Body1">
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="TextAppearance.AppTheme.ProductDescription" parent="TextAppearance.AppTheme.Body2">
-        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
+    <style name="TextAppearance.AppTheme.ProductDetailsPrice" parent="">
+        <item name="android:textColor">@color/colorOnSurface</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextAppearance.AppTheme.ArticleName" parent="TextAppearance.AppTheme.Subtitle1">
@@ -63,4 +74,42 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="TextAppearance.AppTheme.ItemArticleTitle" parent="TextAppearance.AppTheme.Subtitle1">
+        <item name="android:textColor">@color/colorOnScrim</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.OnbdoardingShop" parent="">
+        <item name="fontFamily">@font/open_sans_bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.OnboardingWelcome" parent="">
+        <item name="fontFamily">@font/open_sans</item>
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textSize">24sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="maxLines">3</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.OnboardingBody" parent="TextAppearance.AppTheme.Body1">
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.CartEmptyText" parent="TextAppearance.AppTheme.Headline6">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.CartProductItemTitle" parent="TextAppearance.AppTheme.Subtitle1">
+        <item name="fontFamily">@font/open_sans_light</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.ProfileBodyTitle" parent="TextAppearance.AppTheme.Subtitle1">
+        <item name="android:textColor">@color/colorOnSurface</item>
+    </style>
+
+    <color name="colorRed">#ED2525</color>
 </resources>

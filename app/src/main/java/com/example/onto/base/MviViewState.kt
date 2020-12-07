@@ -1,3 +1,5 @@
 package com.example.onto.base
 
-interface MviViewState
+interface MviViewState {
+    fun log(): String
+}

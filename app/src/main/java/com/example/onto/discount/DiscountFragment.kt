@@ -1,21 +1,21 @@
 package com.example.onto.discount
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.discount.recycler.DiscountAdapter
-import com.example.onto.product.ProductDetailsFragment
-import com.example.onto.products.recycler.ProductItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discounts.*
+import kotlinx.android.synthetic.main.fragment_discounts.cart_badge
+import kotlinx.android.synthetic.main.fragment_discounts.cart_btn
 import kotlinx.android.synthetic.main.fragment_materials.refresher
 
 @AndroidEntryPoint
-class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
+class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
     override val layoutResourceId: Int
         get() = R.layout.fragment_discounts
 
@@ -23,42 +23,34 @@ class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
 
     private lateinit var discountAdapter: DiscountAdapter
 
-    private val intentLiveData = MutableLiveData<DiscountIntent>().also { intents ->
-        _intentLiveData.addSource(intents) {
-            _intentLiveData.value = it
-        }
-    }
-
+    override fun backStackIntent(): DiscountIntent = DiscountIntent.DiscountNothingIntent
     override fun initialIntent(): DiscountIntent? = DiscountIntent.InitialIntent
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
         refresher.setOnRefreshListener {
-            intentLiveData.value = DiscountIntent.RefreshIntent
+            _intentLiveData.value = DiscountIntent.RefreshIntent
         }
 
+        cart_btn.setOnClickListener { _intentLiveData.value = DiscountIntent.NavigateToCartIntent }
+
         discountAdapter = DiscountAdapter(
-            onRetry = { intentLiveData.value = DiscountIntent.ReloadIntent },
+            onRetry = { _intentLiveData.value = DiscountIntent.ReloadIntent },
             onCLick = {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ProductDetailsFragment.newInstance(it))
-                    .addToBackStack(ProductDetailsFragment::class.java.name)
-                    .commitAllowingStateLoss()
+                _intentLiveData.value = DiscountIntent.NavigateToDiscountDetailsIntent(it)
             },
+            onAddCLick = { _intentLiveData.value = DiscountIntent.AddProductToCartIntent(it) }
         )
 
         discountAdapter.setHasStableIds(true)
 
         discounts_recycler.adapter = discountAdapter
-        discounts_recycler.addItemDecoration(
-            ProductItemDecoration(
-                resources.getDimensionPixelSize(R.dimen.gutter_default)
-            )
+        discounts_recycler.layoutManager = StaggeredGridLayoutManager(
+            2, StaggeredGridLayoutManager.VERTICAL
         )
-        discounts_recycler.layoutManager = LinearLayoutManager(context)
     }
 
-    override fun render(viewState: DiscountlViewState) {
+    override fun render(viewState: DiscountViewState) {
         val state = when {
             viewState.isInitialLoading -> RecyclerState.LOADING
             viewState.initialError != null -> RecyclerState.ERROR
@@ -66,6 +58,9 @@ class DiscountFragment : BaseFragment<DiscountlViewState, DiscountIntent>() {
             else -> RecyclerState.ITEM
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
+        cart_badge.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        cart_badge.text = viewState.cartInformation?.count?.toString()
 
         refresher.isEnabled = isRefreshable
         refresher.isRefreshing = viewState.isRefreshLoading

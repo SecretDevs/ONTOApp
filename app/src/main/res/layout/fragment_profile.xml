@@ -7,34 +7,68 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/AppTheme.AppBar"
         android:id="@+id/appbar_layout"
+        style="@style/AppTheme.AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/appbar_content_layout"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             android:background="@color/colorPrimarySurface"
-            android:paddingStart="@dimen/margin_default">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlways">
 
             <TextView
                 android:id="@+id/appbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_default"
                 android:text="@string/fragment_profile_title"
                 android:textAppearance="@style/TextAppearance.AppTheme.ToolbarTitleMain"
-                android:layout_gravity="center_vertical|start"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/cart_view"
-                layout="@layout/cart_icon_layout"
+            <ImageView
+                android:id="@+id/cart_btn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="@dimen/gutter_default"
+                android:padding="4dp"
+                android:src="@drawable/ic_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/question_btn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/question_btn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:padding="4dp"
+                android:src="@drawable/ic_question"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cart_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"/>
+                android:layout_marginTop="4dp"
+                android:background="@drawable/badge_background"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:textAppearance="@style/TextAppearance.AppTheme.BadgeText"
+                app:layout_constraintEnd_toStartOf="@+id/question_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2" />
 
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -56,8 +90,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <include
-            layout="@layout/fragment_profile_content"/>
+        <include layout="@layout/fragment_profile_content" />
 
     </androidx.core.widget.NestedScrollView>
 

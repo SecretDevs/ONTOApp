@@ -1,14 +1,13 @@
 package com.example.onto.materials
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
-import com.example.onto.material.MaterialDetailsFragment
 import com.example.onto.materials.recycler.MaterialAdapter
-import com.example.onto.products.recycler.ProductItemDecoration
+import com.example.onto.materials.recycler.MaterialsItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_materials.*
@@ -22,27 +21,22 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
 
     private lateinit var materialAdapter: MaterialAdapter
 
-    private val intentLiveData = MutableLiveData<MaterialIntent>().also { intents ->
-        _intentLiveData.addSource(intents) {
-            _intentLiveData.value = it
-        }
-    }
+    override fun backStackIntent(): MaterialIntent = MaterialIntent.MaterialsNothingIntent
 
     override fun initialIntent(): MaterialIntent? = MaterialIntent.InitialIntent
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
         refresher.setOnRefreshListener {
-            intentLiveData.value = MaterialIntent.RefreshIntent
+            _intentLiveData.value = MaterialIntent.RefreshIntent
         }
 
+        cart_btn.setOnClickListener { _intentLiveData.value = MaterialIntent.NavigateToCartIntent }
+
         materialAdapter = MaterialAdapter(
-            onRetry = { intentLiveData.value = MaterialIntent.ReloadIntent },
+            onRetry = { _intentLiveData.value = MaterialIntent.ReloadIntent },
             onCLick = {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, MaterialDetailsFragment.newInstance(it))
-                    .addToBackStack(MaterialDetailsFragment::class.java.name)
-                    .commitAllowingStateLoss()
+                _intentLiveData.value = MaterialIntent.NavigateToMaterialDetailsIntent(it)
             },
         )
 
@@ -50,12 +44,12 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
 
         materials_recycler.adapter = materialAdapter
         materials_recycler.addItemDecoration(
-            ProductItemDecoration(
-                resources.getDimensionPixelSize(R.dimen.gutter_default)
+            MaterialsItemDecoration(
+                resources.getDimensionPixelSize(R.dimen.margin_default)
             )
         )
         materials_recycler.layoutManager =
-            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     }
 
     override fun render(viewState: MaterialViewState) {
@@ -66,6 +60,9 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
             else -> RecyclerState.ITEM
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
+        cart_badge.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        cart_badge.text = viewState.cartInformation?.count?.toString()
 
         refresher.isEnabled = isRefreshable
         refresher.isRefreshing = viewState.isRefreshLoading

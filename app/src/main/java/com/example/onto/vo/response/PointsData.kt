@@ -1,7 +1,6 @@
 package com.example.onto.vo.response
 
-import com.example.onto.vo.OntoPickPoint
-import com.example.onto.vo.OntoProduct
+import com.example.onto.vo.remote.OntoPickPoint
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

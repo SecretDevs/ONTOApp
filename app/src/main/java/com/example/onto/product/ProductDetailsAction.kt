@@ -8,4 +8,16 @@ sealed class ProductDetailsAction : MviAction {
         val productId: Long
     ) : ProductDetailsAction()
 
+    data class AddToCartAction(
+        val productId: Long
+    ) : ProductDetailsAction()
+
+    data class ChangeQuantityAction(
+        val change: Int
+    ) : ProductDetailsAction()
+
+    object NavigateBackAction : ProductDetailsAction()
+
+    object NavigateToCartAction : ProductDetailsAction()
+
 }

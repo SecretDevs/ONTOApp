@@ -1,78 +1,74 @@
 package com.example.onto.maps
 
 import com.example.onto.base.MviViewState
-import com.example.onto.vo.OntoShop
+import com.example.onto.vo.remote.OntoShop
 
 class MapsViewState(
-    val isMapLoading: Boolean,
+    val isMapLoaded: Boolean,
+    val isPermissionsChecked: Boolean,
     val isInitialLoading: Boolean,
     val initialError: Throwable?,
-    val ontoShopsList: List<OntoShop>,
-    val selectedShop: OntoShop?
+    val ontoShopsList: List<OntoShop>
 ) : MviViewState {
     companion object {
-        val initialState: MapsViewState = MapsViewState(
-            isMapLoading = true,
-            isInitialLoading = true,
+        val permissionsCheckState = MapsViewState(
+            isMapLoaded = false,
+            isPermissionsChecked = false,
+            isInitialLoading = false,
             initialError = null,
-            ontoShopsList = emptyList(),
-            selectedShop = null
+            ontoShopsList = emptyList()
         )
 
-        fun mapLoadedState(
+        val initialState = MapsViewState(
+            isMapLoaded = false,
+            isPermissionsChecked = true,
+            isInitialLoading = false,
+            initialError = null,
+            ontoShopsList = emptyList()
+        )
+
+        val initialLoadingState = MapsViewState(
+            isMapLoaded = false,
+            isPermissionsChecked = true,
+            isInitialLoading = true,
+            initialError = null,
+            ontoShopsList = emptyList()
+        )
+
+        fun mapLoaded(
             isInitialLoading: Boolean,
             initialError: Throwable?,
-            ontoShopsList: List<OntoShop>,
-            selectedShop: OntoShop?
-        ): MapsViewState = MapsViewState(
-            isMapLoading = false,
-            isInitialLoading = isInitialLoading,
-            initialError = initialError,
-            ontoShopsList = ontoShopsList,
-            selectedShop = selectedShop
-        )
-
-        fun initialLoadingState(isMapLoading: Boolean): MapsViewState = MapsViewState(
-            isMapLoading = isMapLoading,
-            isInitialLoading = true,
-            initialError = null,
-            ontoShopsList = emptyList(),
-            selectedShop = null
-        )
-
-        fun initialLoadingErrorState(
-            isMapLoading: Boolean,
-            initialError: Throwable?
-        ): MapsViewState = MapsViewState(
-            isMapLoading = isMapLoading,
-            isInitialLoading = false,
-            initialError = initialError,
-            ontoShopsList = emptyList(),
-            selectedShop = null
-        )
-
-        fun shopLoadedState(
-            isMapLoading: Boolean,
             ontoShopsList: List<OntoShop>
-        ): MapsViewState = MapsViewState(
-            isMapLoading = isMapLoading,
-            isInitialLoading = false,
-            initialError = null,
-            ontoShopsList = ontoShopsList,
-            selectedShop = null
-        )
+        ): MapsViewState =
+            MapsViewState(
+                isMapLoaded = true,
+                isPermissionsChecked = true,
+                isInitialLoading = isInitialLoading,
+                initialError = initialError,
+                ontoShopsList = ontoShopsList
+            )
 
-        fun shopInfoState(
-            isMapLoading: Boolean,
-            ontoShopsList: List<OntoShop>,
-            selectedShop: OntoShop?
+        fun initialErrorState(isMapLoaded: Boolean, error: Throwable): MapsViewState =
+            MapsViewState(
+                isMapLoaded = isMapLoaded,
+                isPermissionsChecked = true,
+                isInitialLoading = false,
+                initialError = error,
+                ontoShopsList = emptyList()
+            )
+
+        fun shopsLoadedState(
+            isMapLoaded: Boolean,
+            shops: List<OntoShop>
         ): MapsViewState = MapsViewState(
-            isMapLoading = isMapLoading,
+            isMapLoaded = isMapLoaded,
+            isPermissionsChecked = true,
             isInitialLoading = false,
             initialError = null,
-            ontoShopsList = ontoShopsList,
-            selectedShop = selectedShop
+            ontoShopsList = shops
         )
 
     }
+
+    override fun log(): String = toString()
 }

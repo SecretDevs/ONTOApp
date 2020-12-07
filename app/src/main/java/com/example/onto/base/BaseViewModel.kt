@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.onto.utils.distinctUntilChanged
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 abstract class BaseViewModel<
         VS : MviViewState,
@@ -17,13 +18,17 @@ abstract class BaseViewModel<
     protected abstract suspend fun performAction(action: A): E
     protected abstract fun stateReducer(oldState: VS, effect: E): VS
 
-    private val viewStateLiveData = MediatorLiveData<VS>().also {
-        it.value = initialState()
+    protected val viewStateLiveData = MediatorLiveData<VS>().also {
+        if (it.value == null) {
+            it.value = initialState()
+        }
     }
 
     private val _effectLiveData = MediatorLiveData<E>().also { effectLiveData ->
         viewStateLiveData.addSource(effectLiveData) {
-            viewStateLiveData.value = stateReducer(viewStateLiveData.value!!, it)
+            val newState = stateReducer(viewStateLiveData.value!!, it)
+            Timber.d(newState.log())
+            viewStateLiveData.value = newState
         }
     }
 
@@ -40,7 +45,9 @@ abstract class BaseViewModel<
 
         _effectLiveData.addSource(intents) {
             viewModelScope.launch {
-                _effectLiveData.postValue(performAction(intentInterpreter(it)))
+                if (it !is NothingIntent) {
+                    _effectLiveData.postValue(performAction(intentInterpreter(it)))
+                }
             }
         }
 

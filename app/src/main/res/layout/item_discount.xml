@@ -1,93 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_discount_card"
-    style="@style/AppTheme.ProductCard"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/discount_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_discount_star"
+        android:padding="14dp"
+        android:textAppearance="@style/TextAppearance.AppTheme.BadgeText"
+        android:elevation="24dp"
+        tools:text="34%"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_discount_card"
+        style="@style/AppTheme.ProductCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/item_dicount_image"
-            style="@style/AppTheme.SmoothCornerView"
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="@dimen/gutter_default"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="@dimen/gutter_default"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="w,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/AppTheme.SmoothCornerView"
-            tools:src="@tools:sample/backgrounds/scenic" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_product_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/item_discount_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="6dp"
-            android:text="Название"
-            android:textAppearance="@style/TextAppearance.AppTheme.ItemProductNameText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_dicount_image" />
+            <ImageView
+                android:id="@+id/item_product_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/item_discount_pice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="5dp"
-            android:text="275 ₽"
-            android:textAppearance="@style/TextAppearance.AppTheme.ItemProductPriceText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.913"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_dicount_image" />
+            <TextView
+                android:id="@+id/item_product_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_default"
+                android:layout_marginTop="@dimen/gutter_default"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:textAppearance="@style/TextAppearance.AppTheme.ItemProductNameText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_product_image"
+                tools:text="Туркменский таракан консервированный ONTO" />
 
-        <TextView
-            android:id="@+id/item_discount_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:text="Это акция... Пока просто акция"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_discount_name" />
+            <TextView
+                android:id="@+id/item_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gutter_default"
+                android:textAppearance="@style/TextAppearance.AppTheme.ItemDiscountPriceText"
+                app:layout_constraintBottom_toBottomOf="@+id/item_product_cart_btn"
+                app:layout_constraintStart_toStartOf="@+id/item_product_name"
+                app:layout_constraintTop_toTopOf="@+id/item_product_cart_btn"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="275 ₽" />
 
-        <TextView
-            android:id="@+id/item_discount_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:text="Здесь очень скоро будет карта "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_discount_description" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/item_product_cart_btn"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="@dimen/gutter_default"
+                android:layout_marginBottom="@dimen/gutter_default"
+                android:background="@drawable/gradient"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:src="@drawable/ic_add_to_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_product_name"
+                app:shapeAppearanceOverlay="@style/AppTheme.ProductAddShape" />
 
-        <TextView
-            android:id="@+id/item_discount_site"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:text="Это наш сайт"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_discount_map" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

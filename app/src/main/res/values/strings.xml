@@ -1,37 +1,26 @@
 <resources>
     <string name="app_name">ONTO</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_main">MainActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="main_title">Shop</string>
-    <string name="article_title">Материалы</string>
-    <string name="offer_title">Акции</string>
+    <string name="article_title">Articles</string>
+    <string name="offer_title">Sales</string>
     <string name="item_loading_error_btn_text">Retry</string>
     <string name="item_loading_error_text">Loading error</string>
     <string name="item_empty_text">No data</string>
 
-    <string name="price_placeholder">%s ₽</string>
+    <string name="price_placeholder" translatable="false">%s ₽</string>
     <string name="page_map_title">Map</string>
     <string name="page_discount_title">Sales</string>
     <string name="page_shop_title">Shop</string>
     <string name="page_articles_title">Articles</string>
     <string name="page_user_title">User</string>
-    <string name="shops_warning">Пожалуйста, разрешите использовать ваше местоположение , иначе мы не сможем подобрать ближайшие магазины</string>
     <string name="fragment_profile_title">Profile</string>
     <string name="hint_first_name">First name</string>
     <string name="hint_last_name">Last name</string>
-    <string name="hint_example_email">example@yandex.ru</string>
+    <string name="hint_example_email" translatable="false">example@yandex.ru</string>
     <string name="hint_phone_number">Phone number</string>
     <string name="hint_address">Address</string>
     <string name="hint_pet_name">Pet name</string>
-    <string name="add_to_card_btn_text">Add to card</string>
+    <string name="add_to_cart_btn_text">Add to cart</string>
     <string name="monday_abbr">Mon</string>
     <string name="tuesday_abbr">Tue</string>
     <string name="wednesday_abbr">Wed</string>
@@ -39,4 +28,34 @@
     <string name="friday_abbr">Fri</string>
     <string name="saturday_abbr">Sat</string>
     <string name="sunday_abbr">Sun</string>
+    <string name="title_fragment_article_details">About</string>
+    <string name="text_intro_first" translatable="false">Быстро и легко ищите\nнеобходимый корм для ваших\nлюбимцев</string>
+    <string name="text_intro_second" translatable="false">Оформляйте заказ\nв пару кликов</string>
+    <string name="text_intro_third" translatable="false">Дождитесь заказа и обрадуйте\nсвоих питомцев</string>
+    <string name="onto_shop" translatable="false">Pet food</string>
+    <string name="onboarding_welcome_text" translatable="false">Добро\nпожаловать\nв магазин <annotation color="primary">ONTO</annotation> !</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="product_details_protein">Protein:</string>
+    <string name="product_details_fat">Fat:</string>
+    <string name="product_details_carbonhydrate">Carbonhydrate:</string>
+    <string name="product_details_kcal">Kcal:</string>
+    <string name="product_details_price">Price:</string>
+    <string name="fragment_product_details_title">Product</string>
+    <string name="title_cart">Cart</string>
+    <string name="empty_cart_text">Empty cart</string>
+    <string name="item_cart_to_shop">To shop</string>
+    <string name="fragment_question_title">Question</string>
+    <string name="hint_email" translatable="false">E-mail</string>
+    <string name="hint_question">Message</string>
+    <string name="send_question_text_btn">Send</string>
+    <string name="profile_pets_title" translatable="false">Какой у вас питомец?</string>
+    <string name="private_data_title" translatable="false">Личные данные</string>
+    <string name="profile_address_title" translatable="false">Доставка по адресу</string>
+    <string name="hint_city">City</string>
+    <string name="hint_street">Street</string>
+    <string name="hint_house">House</string>
+    <string name="hint_building">Building</string>
+    <string name="hint_apartment">Apartment</string>
+    <string name="shops_warning" translatable="false">Пожалуйста разрешите использование вашего местоположения, иначе мы не сможем подобрать ближайшие магазины.</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.example.onto.vo.response
 
-import com.example.onto.vo.OntoShop
+import com.example.onto.vo.remote.OntoShop
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

@@ -28,7 +28,6 @@
     <style name="AppTheme.AppBar" parent="@style/Widget.Design.AppBarLayout">
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
         <item name="android:background">@color/colorPrimarySurface</item>
-        <item name="android:elevation">16dp</item>
     </style>
 
     <style name="AppTheme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">\
@@ -37,6 +36,11 @@
     </style>
 
     <style name="AppTheme.ProductCard" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearance">@style/AppTheme.SmoothCornerView</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+
+    <style name="AppTheme.ArticleCard" parent="Widget.MaterialComponents.CardView">
         <item name="shapeAppearance">@style/AppTheme.SmoothCornerView</item>
         <item name="cardElevation">8dp</item>
     </style>
@@ -57,23 +61,12 @@
         <item name="android:textAppearance">@style/TextAppearance.AppTheme.Button.OnPrimary</item>
         <item name="android:background">@drawable/gradient</item>
         <item name="backgroundTint">@null</item>
+        <item name="cornerRadius">16dp</item>
     </style>
 
-    <style name="AppTheme.TextButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="AppTheme.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorOnSurfaceMedium</item>
         <item name="android:textAppearance">@style/TextAppearance.AppTheme.Button.OnPrimary</item>
-    </style>
-
-    <style name="AppTheme.CartBadge" parent="Widget.MaterialComponents.Chip.Action">
-        <item name="android:textAppearance">@style/TextAppearance.AppTheme.BadgeText</item>
-        <item name="android:textColor">@color/colorOnBadge</item>
-        <item name="rippleColor">@android:color/transparent</item>
-        <item name="chipBackgroundColor">@color/colorBadgeBackground</item>
-        <item name="chipStrokeColor">@color/colorPrimarySurface</item>
-        <item name="chipStrokeWidth">2dp</item>
-        <item name="chipMinHeight">20dp</item>
-        <item name="textStartPadding">2dp</item>
-        <item name="textEndPadding">0dp</item>
     </style>
 
     <style name="ThemeOverlay.AppTheme.BottomNavigationView" parent="">
@@ -113,4 +106,49 @@
         <item name="cornerSize">16dp</item>
     </style>
 
+    <style name="AppTheme.ProductAddShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="AppTheme.ProductImageShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+    </style>
+
+    <style name="AppTheme.FabArticleTop" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="materialThemeOverlay">@style/AppTheme.FabThemeOverlay</item>
+        <item name="shapeAppearanceOverlay">@style/AppTheme.SmoothCornerView</item>
+    </style>
+
+    <style name="AppTheme.FabThemeOverlay" parent="">
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/colorOnPrimary</item>
+        <item name="colorOnSurface">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="AppTheme.IconOnly" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:minWidth">36dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="DividerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#F1F1F1</item>
+    </style>
+
+    <style name="AppTheme.PetChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/colorPrimaryAlpha</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <color name="colorPrimaryAlpha">#2178B054</color>
 </resources>

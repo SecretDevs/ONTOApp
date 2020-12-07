@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_discounts_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,26 +15,44 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:paddingStart="@dimen/margin_default"
-            app:layout_scrollFlags="scroll|enterAlways">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlways">
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_default"
                 android:text="@string/offer_title"
                 android:textAppearance="@style/TextAppearance.AppTheme.ToolbarTitleMain"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/cart_view"
-                layout="@layout/cart_icon_layout"
+            <ImageView
+                android:id="@+id/cart_btn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/margin_default"
+                android:padding="4dp"
+                android:src="@drawable/ic_cart" />
+
+            <TextView
+                android:id="@+id/cart_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"/>
+                android:layout_gravity="end|top"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/badge_background"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:textAppearance="@style/TextAppearance.AppTheme.BadgeText"
+                tools:text="2" />
 
         </FrameLayout>
 
@@ -54,4 +72,5 @@
             android:paddingTop="@dimen/gutter_default" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
