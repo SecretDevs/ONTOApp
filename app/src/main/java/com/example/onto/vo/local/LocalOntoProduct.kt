@@ -11,6 +11,10 @@ data class LocalOntoProduct(
     val price: Float,
     val image: String,
     val info: String,
+    val proteins: String,
+    val fat: String,
+    val carbon: String,
+    val kcal: String,
     val description: String,
-    @ColumnInfo(name = "is_in_stock") val isInStock: Boolean
+    @ColumnInfo(name = "in_stock") val inStock: Int
 )

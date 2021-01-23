@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,17 +10,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_discount_star"
+        android:elevation="24dp"
         android:padding="14dp"
         android:textAppearance="@style/TextAppearance.AppTheme.BadgeText"
-        android:elevation="24dp"
-        tools:text="34%"/>
+        tools:text="34%" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/item_discount_card"
         style="@style/AppTheme.ProductCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:layout_margin="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_product_layout"
@@ -46,6 +45,7 @@
                 android:layout_marginStart="@dimen/margin_default"
                 android:layout_marginTop="@dimen/gutter_default"
                 android:layout_marginEnd="@dimen/margin_default"
+                android:lines="3"
                 android:textAppearance="@style/TextAppearance.AppTheme.ItemProductNameText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,12 +56,12 @@
                 android:id="@+id/item_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/gutter_default"
-                android:textAppearance="@style/TextAppearance.AppTheme.ItemDiscountPriceText"
-                app:layout_constraintBottom_toBottomOf="@+id/item_product_cart_btn"
+                android:layout_marginTop="@dimen/margin_default"
+                android:layout_marginBottom="@dimen/margin_default"
+                android:textAppearance="@style/TextAppearance.AppTheme.ItemProductPriceText"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/item_product_name"
-                app:layout_constraintTop_toTopOf="@+id/item_product_cart_btn"
-                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintTop_toBottomOf="@+id/item_product_name"
                 tools:text="275 ₽" />
 
             <com.google.android.material.imageview.ShapeableImageView

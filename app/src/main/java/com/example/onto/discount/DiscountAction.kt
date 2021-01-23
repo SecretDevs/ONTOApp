@@ -17,4 +17,6 @@ sealed class DiscountAction : MviAction {
         val productId: Long
     ) : DiscountAction()
 
+    object UpdateCartAction : DiscountAction()
+
 }

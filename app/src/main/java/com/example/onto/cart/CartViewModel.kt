@@ -32,6 +32,8 @@ class CartViewModel @ViewModelInject constructor(
                 -1
             )
             CartIntent.CartNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
+            CartIntent.CheckoutIntent -> CartAction.CheckoutAction
+            is CartIntent.OpenProductDetailsIntent -> CartAction.OpenProductDetailsAction(intent.productId)
         }
 
     override suspend fun performAction(action: CartAction): CartEffect =
@@ -60,6 +62,14 @@ class CartViewModel @ViewModelInject constructor(
                     is Result.Success -> CartEffect.CartLoadedEffect(result.data)
                     is Result.Error -> CartEffect.QuantityErrorEffect(result.throwable)
                 }
+            }
+            CartAction.CheckoutAction -> {
+                coordinator.navigateToOrder()
+                CartEffect.NoEffect
+            }
+            is CartAction.OpenProductDetailsAction -> {
+                coordinator.navigateToProduct(action.productId)
+                CartEffect.NoEffect
             }
         }
 

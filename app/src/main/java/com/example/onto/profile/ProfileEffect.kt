@@ -13,7 +13,8 @@ sealed class ProfileEffect : MviEffect {
     ) : ProfileEffect()
 
     data class UserLoadedEffect(
-        val user: OntoUser
+        val user: OntoUser,
+        val forDelivery: Boolean
     ) : ProfileEffect()
 
     data class CartInformationLoaded(

@@ -50,8 +50,8 @@ abstract class BaseFragment<
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
         _intentLiveData.value = backStackIntent()
     }
 }

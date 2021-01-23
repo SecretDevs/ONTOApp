@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile_content.*
 import kotlinx.android.synthetic.main.item_error.*
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
@@ -15,7 +16,18 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
         get() = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
 
-    override fun backStackIntent(): ProfileIntent = ProfileIntent.ProfileNothingIntent
+    override fun backStackIntent(): ProfileIntent = ProfileIntent.SaveProfileIntent(
+        firstName = first_name_edit.text?.toString() ?: "",
+        lastName = last_name_edit.text?.toString() ?: "",
+        email = email_name_edit.text?.toString() ?: "",
+        phone = phone_name_edit.text?.toString() ?: "",
+        useForDelivery = ship_address.isChecked,
+        city = city_edit.text?.toString() ?: "",
+        street = street_edit.text?.toString() ?: "",
+        house = house_edit.text?.toString() ?: "",
+        building = building_edit.text?.toString() ?: "",
+        apartment = apartment_edit.text?.toString() ?: ""
+    )
 
     override fun initialIntent(): ProfileIntent? = ProfileIntent.InitialIntent
 
@@ -35,9 +47,19 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
         loading_view.isVisible = viewState.isInitialLoading
         error_view.isVisible = viewState.initialLoadingError != null
         content_view.isVisible = viewState.user != null
+        ship_address.isChecked = viewState.forDelivery
+
         cart_badge.isVisible =
             viewState.cartInformation != null && viewState.cartInformation.count != 0
-        cart_badge.text = viewState.cartInformation?.count?.toString()
+        cart_price.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        if (viewState.cartInformation != null) {
+            cart_price.text = resources.getString(
+                R.string.price_placeholder,
+                priceFormat.format(viewState.cartInformation.totalPrice)
+            )
+            cart_badge.text = viewState.cartInformation.count.toString()
+        }
 
         if (viewState.user != null) {
             pet_type.text = viewState.user.pet.type
@@ -51,6 +73,10 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
             street_edit.setText(viewState.user.address.street)
             apartment_edit.setText(viewState.user.address.apartment.toString())
         }
+    }
+
+    companion object {
+        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

@@ -10,27 +10,42 @@ import dagger.hilt.android.components.ActivityComponent
 @InstallIn(ActivityComponent::class)
 abstract class UseCaseModule {
     @Binds
-    abstract fun provideProductsUseCase(
+    abstract fun bindProductsUseCase(
         productsUseCaseImpl: ProductsUseCaseImpl
     ): ProductsUseCase
 
     @Binds
-    abstract fun provideProfileUseCase(
+    abstract fun bindProfileUseCase(
         profileUseCaseImpl: ProfileUseCaseImpl
     ): ProfileUseCase
 
     @Binds
-    abstract fun provideProductDetailsUseCase(
+    abstract fun bindProductDetailsUseCase(
         productDetailsUseCaseImpl: ProductDetailsUseCaseImpl
     ): ProductDetailsUseCase
 
     @Binds
-    abstract fun provideSharedPreferenceUseCase(
-        sharedPreferenceUseCaseImpl: SharedPreferenceUseCaseImpl
-    ): SharedPreferenceUseCase
+    abstract fun bindOnboardingUseCase(
+        onboardingUseCaseImpl: OnboardingUseCaseImpl
+    ): OnboardingUseCase
 
     @Binds
-    abstract fun provideCartUseCase(
+    abstract fun bindProfilePrefsUseCase(
+        profilePrefsUseCaseImpl: ProfilePrefsUseCaseImpl
+    ): ProfilePrefsUseCase
+
+    @Binds
+    abstract fun bindOrderPrefsUseCase(
+        orderPrefsUseCaseImpl: OrderPrefsUseCaseImpl
+    ): OrderPrefsUseCase
+
+    @Binds
+    abstract fun bindQuestionUseCase(
+        questionUseCaseImpl: QuestionUseCaseImpl
+    ): QuestionUseCase
+
+    @Binds
+    abstract fun bindCartUseCase(
         cartUseCaseImpl: CartUseCaseImpl
     ): CartUseCase
 

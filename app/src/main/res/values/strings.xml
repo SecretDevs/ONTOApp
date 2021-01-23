@@ -58,4 +58,31 @@
     <string name="hint_building">Building</string>
     <string name="hint_apartment">Apartment</string>
     <string name="shops_warning" translatable="false">Пожалуйста разрешите использование вашего местоположения, иначе мы не сможем подобрать ближайшие магазины.</string>
+    <string name="bottom_sheet_payment_title">Payment</string>
+    <string name="card_number_hint">Card number</string>
+    <string name="card_holder_name_hint">Card holder name</string>
+    <string name="expire_hint">MM/YY</string>
+    <string name="cvv_hint" translatable="false">CVV</string>
+    <string name="checkout_button_text">%s₽ - checkout</string>
+    <string name="pay_button_text">%s₽ - pay</string>
+    <string name="order_step_text">Step %d.</string>
+    <string-array name="order_description_text">
+        <item>Contact details</item>
+        <item>Delivery</item>
+        <item>Confirmation</item>
+    </string-array>
+    <string name="order_step_tab_title" translatable="false">%s\n%s</string>
+    <string name="repeat_order_text">Repeat</string>
+    <string name="contact_details_title">Contact details</string>
+    <string name="fragment_checkout">Checkout</string>
+    <string name="order_checkout_next_btn">Next</string>
+    <string name="product_details_description_title">Description</string>
+    <string name="product_details_advantages_title">More</string>
+    <string name="order_delivery_address_title">Delivery to address</string>
+    <string name="order_delivery_post_title">Russian Post</string>
+    <string name="order_delivery_pickup_title">Pick-up point</string>
+    <string name="order_number_text">Order #%d</string>
+    <string name="commentary_title">Commentary</string>
+    <string name="full_name_text" translatable="false">%s %s</string>
+    <string name="order_delivery_address_full">%s, %s St., %s hse, %s bldg., %s apt.</string>
 </resources>

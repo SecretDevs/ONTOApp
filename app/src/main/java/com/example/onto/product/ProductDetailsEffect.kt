@@ -4,6 +4,7 @@ import com.example.onto.base.MviEffect
 import com.example.onto.discount.DiscountEffect
 import com.example.onto.vo.inapp.CartInformation
 import com.example.onto.vo.inapp.OntoProduct
+import com.example.onto.vo.inapp.OntoProductWithSimilar
 
 sealed class ProductDetailsEffect : MviEffect {
 
@@ -14,7 +15,7 @@ sealed class ProductDetailsEffect : MviEffect {
     ) : ProductDetailsEffect()
 
     data class ProductDetailsLoadedEffect(
-        val product: OntoProduct
+        val product: OntoProductWithSimilar
     ) : ProductDetailsEffect()
 
     data class CartInformationLoadedEffect(

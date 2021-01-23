@@ -9,7 +9,8 @@ sealed class ProductDetailsAction : MviAction {
     ) : ProductDetailsAction()
 
     data class AddToCartAction(
-        val productId: Long
+        val productId: Long,
+        val isSimilar: Boolean
     ) : ProductDetailsAction()
 
     data class ChangeQuantityAction(
@@ -19,5 +20,7 @@ sealed class ProductDetailsAction : MviAction {
     object NavigateBackAction : ProductDetailsAction()
 
     object NavigateToCartAction : ProductDetailsAction()
+
+    object UpdateCartAction : ProductDetailsAction()
 
 }

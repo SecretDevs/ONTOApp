@@ -9,4 +9,5 @@ sealed class MapsIntent : MviIntent {
     object ReloadIntent : MapsIntent()
     object MapsNothingIntent : MapsIntent(), NothingIntent
     object MapLoadedIntent : MapsIntent()
+    object OpenCartIntent : MapsIntent()
 }

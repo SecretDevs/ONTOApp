@@ -3,12 +3,13 @@ package com.example.onto.navigation
 import androidx.fragment.app.FragmentActivity
 import com.example.onto.R
 import com.example.onto.cart.CartFragment
-import com.example.onto.data.usecase.SharedPreferenceUseCaseImpl
+import com.example.onto.data.usecase.OnboardingUseCaseImpl
 import com.example.onto.discount.DiscountFragment
 import com.example.onto.maps.MapsFragment
 import com.example.onto.material.MaterialDetailsFragment
 import com.example.onto.materials.MaterialsFragment
 import com.example.onto.onboarding.OnboardingFragment
+import com.example.onto.order.OrderFragment
 import com.example.onto.product.ProductDetailsFragment
 import com.example.onto.products.ProductsFragment
 import com.example.onto.profile.ProfileFragment
@@ -39,7 +40,7 @@ class CoordinatorImpl @Inject constructor(
     @ActivityScoped activity: FragmentActivity
 ) : Coordinator {
     private val fragmentManager = activity.supportFragmentManager
-    private val preferenceUseCase = SharedPreferenceUseCaseImpl(activity)
+    private val preferenceUseCase = OnboardingUseCaseImpl(activity)
 
     override fun navigateToOnboarding() {
         fragmentManager.beginTransaction()
@@ -122,7 +123,10 @@ class CoordinatorImpl @Inject constructor(
     }
 
     override fun navigateToOrder() {
-
+        fragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, OrderFragment.newInstance())
+            .addToBackStack(OrderFragment::class.java.name)
+            .commitAllowingStateLoss()
     }
 
     override fun start() {

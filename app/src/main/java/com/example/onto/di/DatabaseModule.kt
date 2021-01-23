@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.onto.data.local.CartDao
 import com.example.onto.data.local.OntoDatabase
 import com.example.onto.data.local.ProductsDao
+import com.example.onto.data.local.SimilarProductsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +33,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideProductsDao(db: OntoDatabase): ProductsDao = db.productsDao()
+
+    @Provides
+    @Singleton
+    fun provideSimilarProductsDao(db: OntoDatabase): SimilarProductsDao = db.similarProductsDao()
 
 }

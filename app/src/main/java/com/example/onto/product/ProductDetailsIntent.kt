@@ -17,6 +17,10 @@ sealed class ProductDetailsIntent : MviIntent {
         val productId: Long
     ) : ProductDetailsIntent()
 
+    data class AddSimilarToCartIntent(
+        val productId: Long
+    ) : ProductDetailsIntent()
+
     object AddOneIntent : ProductDetailsIntent()
 
     object RemoveOneIntent : ProductDetailsIntent()
@@ -25,6 +29,6 @@ sealed class ProductDetailsIntent : MviIntent {
 
     object NavigateToCartIntent : ProductDetailsIntent()
 
-    object ProductDetailsNothingIntent : ProductDetailsIntent(), NothingIntent
+    object UpdateCartIntent : ProductDetailsIntent()
 
 }

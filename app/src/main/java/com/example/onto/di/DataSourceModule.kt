@@ -10,27 +10,25 @@ import javax.inject.Qualifier
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class DataSourceModule {
-    @RemoteDataSource
     @Binds
-    abstract fun provideRemoteProductsDataSource(
-        remoteProductsDataSource: RemoteProductsDataSource
-    ): ProductsDataSource
+    abstract fun bindRemoteProductsDataSource(
+        remoteProductsDataSource: RemoteProductsDataSourceImpl
+    ): RemoteProductsDataSource
 
-    @LocalDataSource
     @Binds
-    abstract fun provideLocalProductsDataSource(
-        localProductsDataSource: LocalProductsDataSource
-    ): ProductsDataSource
+    abstract fun bindLocalProductsDataSource(
+        localProductsDataSource: LocalProductsDataSourceImpl
+    ): LocalProductsDataSource
 
     @RemoteDataSource
     @Binds
-    abstract fun provideRemoteProfileDataSource(
+    abstract fun bindRemoteProfileDataSource(
         remoteProfileDataSource: RemoteProfileDataSource
     ): ProfileDataSource
 
     @LocalDataSource
     @Binds
-    abstract fun provideLocalCartDataSource(
+    abstract fun bindLocalCartDataSource(
         localCartDataSource: LocalCartDataSource
     ): CartDataSource
 }

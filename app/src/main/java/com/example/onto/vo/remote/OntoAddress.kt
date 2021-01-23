@@ -6,6 +6,6 @@ import com.squareup.moshi.JsonClass
 data class OntoAddress(
     val city: String,
     val street: String,
-    val house: Int,
-    val apartment: Int
+    val house: String,
+    val apartment: String
 )

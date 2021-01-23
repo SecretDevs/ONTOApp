@@ -12,6 +12,10 @@ sealed class CartAction : MviAction {
 
     object GoBackAction : CartAction()
 
+    object CheckoutAction : CartAction()
+
+    data class OpenProductDetailsAction(val productId: Long) : CartAction()
+
     data class ChangeItemCountAction(
         val productId: Long,
         val change: Int

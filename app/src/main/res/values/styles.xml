@@ -19,6 +19,7 @@
         <item name="android:windowContentTransitions">true</item>
 
         <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
@@ -61,6 +62,14 @@
         <item name="android:textAppearance">@style/TextAppearance.AppTheme.Button.OnPrimary</item>
         <item name="android:background">@drawable/gradient</item>
         <item name="backgroundTint">@null</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="AppTheme.RetryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.Button.OnPrimary</item>
+        <item name="background">@color/colorPrimaryAlphaBackground</item>
+        <item name="backgroundTint">@color/colorPrimaryAlphaBackground</item>
+        <item name="android:textColor">@color/colorPrimaryLight</item>
         <item name="cornerRadius">16dp</item>
     </style>
 
@@ -139,6 +148,17 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
+    <style name="AppTheme.CheckoutPrevButton" parent="Widget.MaterialComponents.Button.OutlinedButton">4
+        <item name="backgroundTint">@color/colorPrimaryAlphaBackground</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">22dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:minWidth">72dp</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
     <style name="DividerStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
@@ -146,9 +166,20 @@
     </style>
 
     <style name="AppTheme.PetChip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/colorPrimaryAlpha</item>
+        <item name="chipBackgroundColor">@color/colorPrimaryAlphaBackground</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <color name="colorPrimaryAlpha">#2178B054</color>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/ic_rounded_dialog</item>
+    </style>
+
 </resources>

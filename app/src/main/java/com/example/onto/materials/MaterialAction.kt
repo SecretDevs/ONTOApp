@@ -14,4 +14,6 @@ sealed class MaterialAction : MviAction {
         val productId: Long
     ) : MaterialAction()
 
+    object UpdateCartAction : MaterialAction()
+
 }

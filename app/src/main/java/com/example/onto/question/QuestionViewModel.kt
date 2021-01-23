@@ -2,14 +2,18 @@ package com.example.onto.question
 
 import androidx.hilt.lifecycle.ViewModelInject
 import com.example.onto.base.BaseViewModel
+import com.example.onto.data.usecase.ProfilePrefsUseCase
+import com.example.onto.data.usecase.QuestionUseCase
 import com.example.onto.navigation.Coordinator
 
 class QuestionViewModel @ViewModelInject constructor(
-    private val coordinator: Coordinator
+    private val coordinator: Coordinator,
+    private val profilePrefsUseCase: ProfilePrefsUseCase,
+    private val questionUseCase: QuestionUseCase
 ) : BaseViewModel<QuestionViewState, QuestionEffect, QuestionIntent, QuestionAction>() {
     override fun initialState(): QuestionViewState = QuestionViewState()
 
-    override fun intentInterpreter(intent: QuestionIntent): QuestionAction  =
+    override fun intentInterpreter(intent: QuestionIntent): QuestionAction =
         when (intent) {
             QuestionIntent.InitialIntent -> QuestionAction.LoadSavedAction
             QuestionIntent.GoBackIntent -> QuestionAction.GoBackAction
@@ -21,14 +25,17 @@ class QuestionViewModel @ViewModelInject constructor(
                 intent.email,
                 intent.question
             )
-            QuestionIntent.QuestionNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
         }
 
     override suspend fun performAction(action: QuestionAction): QuestionEffect =
         when (action) {
             QuestionAction.LoadSavedAction -> {
-                //TODO: saving and storing
-                QuestionEffect.SavedValuesLoadedEffect(null, null)
+                QuestionEffect.SavedValuesLoadedEffect(
+                    email = if (questionUseCase.getEmail()
+                            .isNotEmpty()
+                    ) questionUseCase.getEmail() else profilePrefsUseCase.getEmail(),
+                    question = questionUseCase.getMessage()
+                )
             }
             QuestionAction.GoBackAction -> {
                 coordinator.pop()
@@ -36,10 +43,17 @@ class QuestionViewModel @ViewModelInject constructor(
             }
             is QuestionAction.PostQuestionAction -> {
                 //TODO: posting
+                questionUseCase.apply {
+                    setEmail("")
+                    setMessage("")
+                }
                 QuestionEffect.PostingQuestionEffect
             }
             is QuestionAction.SaveDraftAction -> {
-                //TODO: saving and storing
+                questionUseCase.apply {
+                    setEmail(action.email)
+                    setMessage(action.question)
+                }
                 QuestionEffect.NoEffect
             }
         }

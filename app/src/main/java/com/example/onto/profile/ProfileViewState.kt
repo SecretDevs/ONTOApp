@@ -8,7 +8,8 @@ data class ProfileViewState(
     val isInitialLoading: Boolean = false,
     val initialLoadingError: Throwable? = null,
     val user: OntoUser? = null,
-    val cartInformation: CartInformation? = null
+    val cartInformation: CartInformation? = null,
+    val forDelivery: Boolean = false
 ) : MviViewState {
 
     override fun log(): String = this.toString()

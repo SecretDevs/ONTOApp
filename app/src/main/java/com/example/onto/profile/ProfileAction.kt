@@ -10,4 +10,17 @@ sealed class ProfileAction : MviAction {
 
     object NavigateToCartAction : ProfileAction()
 
+    data class SaveProfileAction(
+        val firstName: String,
+        val lastName: String,
+        val email: String,
+        val phone: String,
+        val useForDelivery: Boolean,
+        val city: String,
+        val street: String,
+        val house: String,
+        val building: String,
+        val apartment: String
+    ) : ProfileAction()
+
 }

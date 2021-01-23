@@ -10,6 +10,8 @@ data class RemoteOntoProduct(
     val price: Float,
     val image: String,
     val info: String,
+    val parameters: List<RemoteOntoProductParameter>,
     val description: String,
-    @field:Json(name = "is_in_stock") val isInStock: Boolean
+    @field:Json(name = "in_stock") val inStock: Int,
+    @field:Json(name = "similar_products") val similarProducts: List<Long>
 )

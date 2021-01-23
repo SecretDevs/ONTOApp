@@ -11,6 +11,7 @@ import com.example.onto.products.recycler.ProductItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_products.*
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
@@ -22,7 +23,7 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
 
     override fun initialIntent(): ProductsIntent? = ProductsIntent.InitialIntent
 
-    override fun backStackIntent(): ProductsIntent = ProductsIntent.ProductsNothingIntent
+    override fun backStackIntent(): ProductsIntent = ProductsIntent.UpdateCartIntent
 
     override fun initViews() {
         refresher.setColorSchemeResources(R.color.colorPrimary)
@@ -61,7 +62,14 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
         cart_badge.isVisible = viewState.cartInfo != null && viewState.cartInfo.count != 0
-        cart_badge.text = viewState.cartInfo?.count?.toString()
+        cart_price.isVisible = viewState.cartInfo != null && viewState.cartInfo.count != 0
+        if (viewState.cartInfo != null) {
+            cart_price.text = resources.getString(
+                R.string.price_placeholder,
+                priceFormat.format(viewState.cartInfo.totalPrice)
+            )
+            cart_badge.text = viewState.cartInfo.count.toString()
+        }
 
         refresher.isEnabled = isRefreshable
         refresher.isRefreshing = viewState.isRefreshLoading
@@ -74,6 +82,10 @@ class ProductsFragment : BaseFragment<ProductsViewState, ProductsIntent>() {
                 Snackbar.LENGTH_SHORT
             ).show()
         }
+    }
+
+    companion object {
+        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

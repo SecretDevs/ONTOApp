@@ -11,6 +11,7 @@ import com.example.onto.materials.recycler.MaterialsItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_materials.*
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
@@ -21,7 +22,7 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
 
     private lateinit var materialAdapter: MaterialAdapter
 
-    override fun backStackIntent(): MaterialIntent = MaterialIntent.MaterialsNothingIntent
+    override fun backStackIntent(): MaterialIntent = MaterialIntent.UpdateCartIntent
 
     override fun initialIntent(): MaterialIntent? = MaterialIntent.InitialIntent
 
@@ -60,9 +61,18 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
             else -> RecyclerState.ITEM
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
+
         cart_badge.isVisible =
             viewState.cartInformation != null && viewState.cartInformation.count != 0
-        cart_badge.text = viewState.cartInformation?.count?.toString()
+        cart_price.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        if (viewState.cartInformation != null) {
+            cart_price.text = resources.getString(
+                R.string.price_placeholder,
+                priceFormat.format(viewState.cartInformation.totalPrice)
+            )
+            cart_badge.text = viewState.cartInformation.count.toString()
+        }
 
         refresher.isEnabled = isRefreshable
         refresher.isRefreshing = viewState.isRefreshLoading
@@ -75,6 +85,10 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
                 Snackbar.LENGTH_SHORT
             ).show()
         }
+    }
+
+    companion object {
+        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

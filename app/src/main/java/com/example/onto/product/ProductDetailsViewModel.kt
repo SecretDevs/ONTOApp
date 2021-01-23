@@ -24,12 +24,17 @@ class ProductDetailsViewModel @ViewModelInject constructor(
             )
             ProductDetailsIntent.NavigateBackIntent -> ProductDetailsAction.NavigateBackAction
             ProductDetailsIntent.NavigateToCartIntent -> ProductDetailsAction.NavigateToCartAction
-            ProductDetailsIntent.ProductDetailsNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
             is ProductDetailsIntent.AddToCartIntent -> ProductDetailsAction.AddToCartAction(
-                intent.productId
+                intent.productId,
+                false
             )
             ProductDetailsIntent.AddOneIntent -> ProductDetailsAction.ChangeQuantityAction(1)
             ProductDetailsIntent.RemoveOneIntent -> ProductDetailsAction.ChangeQuantityAction(-1)
+            is ProductDetailsIntent.AddSimilarToCartIntent -> ProductDetailsAction.AddToCartAction(
+                intent.productId,
+                true
+            )
+            ProductDetailsIntent.UpdateCartIntent -> ProductDetailsAction.UpdateCartAction
         }
 
     override suspend fun performAction(action: ProductDetailsAction): ProductDetailsEffect =
@@ -50,7 +55,7 @@ class ProductDetailsViewModel @ViewModelInject constructor(
                 }
             }
             ProductDetailsAction.NavigateBackAction -> {
-                coordinator.pop() //TODO: return to prev fragment without cycling
+                coordinator.pop()
                 ProductDetailsEffect.NoEffect
             }
             ProductDetailsAction.NavigateToCartAction -> {
@@ -58,7 +63,10 @@ class ProductDetailsViewModel @ViewModelInject constructor(
                 ProductDetailsEffect.NoEffect
             }
             is ProductDetailsAction.AddToCartAction -> {
-                cartUseCase.addCartItem(action.productId, viewStateLiveData.value!!.quantity)
+                cartUseCase.addCartItem(
+                    action.productId,
+                    if (!action.isSimilar) viewStateLiveData.value!!.quantity else 1
+                )
                 ProductDetailsEffect.CartInformationLoadedEffect(
                     when (val result = cartUseCase.getCartInformation()) {
                         is Result.Success -> result.data
@@ -68,6 +76,12 @@ class ProductDetailsViewModel @ViewModelInject constructor(
             }
             is ProductDetailsAction.ChangeQuantityAction -> ProductDetailsEffect.ChangeQuantityEffect(
                 action.change
+            )
+            ProductDetailsAction.UpdateCartAction -> ProductDetailsEffect.CartInformationLoadedEffect(
+                when (val result = cartUseCase.getCartInformation()) {
+                    is Result.Success -> result.data
+                    is Result.Error -> null
+                }
             )
         }
 

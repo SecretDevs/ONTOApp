@@ -1,6 +1,7 @@
 package com.example.onto.maps
 
 import com.example.onto.base.MviEffect
+import com.example.onto.vo.inapp.CartInformation
 import com.example.onto.vo.remote.OntoShop
 
 sealed class MapsEffect : MviEffect {
@@ -11,6 +12,8 @@ sealed class MapsEffect : MviEffect {
 
     object MapLoadedEffect : MapsEffect()
 
+    object NoEffect : MapsEffect()
+
     data class InitialLoadingErrorEffect(
         val throwable: Throwable
     ) : MapsEffect()
@@ -18,4 +21,9 @@ sealed class MapsEffect : MviEffect {
     data class ShopsLoadedEffect(
         val shops: List<OntoShop>
     ) : MapsEffect()
+
+    data class CartInformationLoadedEffect(
+        val cartInformation: CartInformation?
+    ) : MapsEffect()
+
 }

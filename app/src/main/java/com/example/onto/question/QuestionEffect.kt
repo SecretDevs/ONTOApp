@@ -5,8 +5,8 @@ import com.example.onto.base.MviEffect
 sealed class QuestionEffect : MviEffect {
 
     data class SavedValuesLoadedEffect(
-        val email: String?,
-        val question: String?
+        val email: String,
+        val question: String
     ) : QuestionEffect()
 
     object PostingQuestionEffect : QuestionEffect()

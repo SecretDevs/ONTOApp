@@ -21,6 +21,6 @@ sealed class DiscountIntent : MviIntent {
 
     object NavigateToCartIntent : DiscountIntent()
 
-    object DiscountNothingIntent : DiscountIntent(), NothingIntent
+    object UpdateCartIntent : DiscountIntent(), NothingIntent
 
 }

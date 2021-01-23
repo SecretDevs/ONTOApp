@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/order_history_product_image"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/AppTheme.SmoothCornerView"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/order_history_product_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/gutter_default"
+        android:maxLines="3"
+        android:textAppearance="@style/TextAppearance.AppTheme.CartProductItemTitle"
+        app:layout_constraintBottom_toTopOf="@+id/cart_product_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/order_history_product_image"
+        app:layout_constraintTop_toTopOf="@+id/order_history_product_image"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Туркменский таракан консервированный ONTO" />
+
+    <TextView
+        android:id="@id/order_history_product_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:textAppearance="@style/TextAppearance.AppTheme.ItemProductPriceText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/order_history_product_image"
+        tools:text="2 pc." />
+
+    <TextView
+        android:id="@+id/cart_product_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:textAlignment="textEnd"
+        android:textAppearance="@style/TextAppearance.AppTheme.ItemProductPriceText"
+        app:layout_constraintBottom_toBottomOf="@+id/order_history_product_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/order_history_product_quantity"
+        tools:text="275 ₽" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -57,6 +57,7 @@ class OnboardingFragment : Fragment() {
         skip_btn.setOnClickListener {
             viewModel.onSeenOnboarding()
         }
+        onboarding_info.offscreenPageLimit = 3
     }
 
 }

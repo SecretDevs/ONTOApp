@@ -23,7 +23,7 @@ class MaterialViewModel @ViewModelInject constructor(
                 intent.materialId
             )
             MaterialIntent.NavigateToCartIntent -> MaterialAction.NavigateToCartAction
-            MaterialIntent.MaterialsNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
+            MaterialIntent.UpdateCartIntent -> MaterialAction.UpdateCartAction
         }
 
     override suspend fun performAction(action: MaterialAction): MaterialEffect =
@@ -58,6 +58,12 @@ class MaterialViewModel @ViewModelInject constructor(
                 coordinator.navigateToArticle(action.productId)
                 MaterialEffect.NoEffect
             }
+            MaterialAction.UpdateCartAction -> MaterialEffect.CartInformationLoadedEffect(
+                when (val result = cartUseCase.getCartInformation()) {
+                    is Result.Success -> result.data
+                    is Result.Error -> null
+                }
+            )
         }
 
     override fun stateReducer(

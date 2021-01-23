@@ -64,7 +64,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="@dimen/gutter_default"
+        android:paddingBottom="68dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:listitem="@layout/item_cart_product"/>
+
+    <FrameLayout
+        android:id="@+id/checkout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimarySurface"
+        android:elevation="16dp"
+        app:layout_dodgeInsetEdges="bottom">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkout_btn"
+            style="@style/AppTheme.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            tools:text="624 ₽ - оформить заказ"/>
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

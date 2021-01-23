@@ -13,7 +13,10 @@ class QuestionFragment : BaseFragment<QuestionViewState, QuestionIntent>() {
         get() = R.layout.fragment_question
     override val viewModel: QuestionViewModel by viewModels()
 
-    override fun backStackIntent(): QuestionIntent = QuestionIntent.QuestionNothingIntent
+    override fun backStackIntent(): QuestionIntent = QuestionIntent.SaveDraftIntent(
+        email = email_edit.text?.toString() ?: "",
+        question = question_edit.text?.toString() ?: ""
+    )
 
     override fun initialIntent(): QuestionIntent? = QuestionIntent.InitialIntent
 
@@ -30,10 +33,10 @@ class QuestionFragment : BaseFragment<QuestionViewState, QuestionIntent>() {
     }
 
     override fun render(viewState: QuestionViewState) {
-        if (email_edit.text == null) {
+        if (email_edit.text.isNullOrEmpty()) {
             email_edit.setText(viewState.savedEmail)
         }
-        if (question_edit.text == null) {
+        if (question_edit.text.isNullOrEmpty()) {
             question_edit.setText(viewState.savedMessage)
         }
         loading_view.isVisible = viewState.isLoading

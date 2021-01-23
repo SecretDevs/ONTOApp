@@ -7,12 +7,14 @@ import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.discount.recycler.DiscountAdapter
+import com.example.onto.discount.recycler.DiscountItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discounts.*
 import kotlinx.android.synthetic.main.fragment_discounts.cart_badge
 import kotlinx.android.synthetic.main.fragment_discounts.cart_btn
 import kotlinx.android.synthetic.main.fragment_materials.refresher
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
@@ -23,7 +25,7 @@ class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
 
     private lateinit var discountAdapter: DiscountAdapter
 
-    override fun backStackIntent(): DiscountIntent = DiscountIntent.DiscountNothingIntent
+    override fun backStackIntent(): DiscountIntent = DiscountIntent.UpdateCartIntent
     override fun initialIntent(): DiscountIntent? = DiscountIntent.InitialIntent
 
     override fun initViews() {
@@ -45,6 +47,11 @@ class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
         discountAdapter.setHasStableIds(true)
 
         discounts_recycler.adapter = discountAdapter
+        discounts_recycler.addItemDecoration(
+            DiscountItemDecoration(
+                resources.getDimensionPixelSize(R.dimen.margin_default)
+            )
+        )
         discounts_recycler.layoutManager = StaggeredGridLayoutManager(
             2, StaggeredGridLayoutManager.VERTICAL
         )
@@ -58,9 +65,18 @@ class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
             else -> RecyclerState.ITEM
         }
         val isRefreshable = !(viewState.isInitialLoading || viewState.initialError != null)
+
         cart_badge.isVisible =
             viewState.cartInformation != null && viewState.cartInformation.count != 0
-        cart_badge.text = viewState.cartInformation?.count?.toString()
+        cart_price.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        if (viewState.cartInformation != null) {
+            cart_price.text = resources.getString(
+                R.string.price_placeholder,
+                priceFormat.format(viewState.cartInformation.totalPrice)
+            )
+            cart_badge.text = viewState.cartInformation.count.toString()
+        }
 
         refresher.isEnabled = isRefreshable
         refresher.isRefreshing = viewState.isRefreshLoading
@@ -73,6 +89,10 @@ class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
                 Snackbar.LENGTH_SHORT
             ).show()
         }
+    }
+
+    companion object {
+        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

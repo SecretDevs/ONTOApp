@@ -17,4 +17,6 @@ sealed class MaterialDetailsIntent : MviIntent {
 
     object MaterialDetailsNothingIntent : MaterialDetailsIntent(), NothingIntent
 
+    object NavigateToCartIntent : MaterialDetailsIntent()
+
 }

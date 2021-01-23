@@ -1,5 +1,6 @@
 package com.example.onto.cart
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onto.R
@@ -8,6 +9,7 @@ import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.cart.recycler.CartAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_cart.*
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment<CartViewState, CartIntent>() {
@@ -28,11 +30,14 @@ class CartFragment : BaseFragment<CartViewState, CartIntent>() {
         adapter = CartAdapter(
             onEmptyClick = { _intentLiveData.value = CartIntent.OpenShopIntent },
             onErrorClick = { _intentLiveData.value = CartIntent.ReloadIntent },
-            onProductClick = { }, //??
+            onProductClick = { _intentLiveData.value = CartIntent.OpenProductDetailsIntent(it) },
             onRemoveClick = { _intentLiveData.value = CartIntent.RemoveProductIntent(it) },
             onMinusClick = { _intentLiveData.value = CartIntent.RemoveOneItemForProductIntent(it) },
             onAddClick = { _intentLiveData.value = CartIntent.AddOneItemForProductIntent(it) }
         )
+        checkout_btn.setOnClickListener {
+            _intentLiveData.value = CartIntent.CheckoutIntent
+        }
         products_recycler.adapter = adapter
         products_recycler.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -44,11 +49,19 @@ class CartFragment : BaseFragment<CartViewState, CartIntent>() {
             viewState.data.isEmpty() -> RecyclerState.EMPTY
             else -> RecyclerState.ITEM
         }
-        adapter.updateData(viewState.data, state)
+        val totalPrice = viewState.data.map { it.quantity * it.product.price }.sum()
 
+        adapter.updateData(viewState.data, state)
+        checkout_layout.isVisible = viewState.data.isNotEmpty()
+        checkout_btn.text = resources.getString(
+            R.string.checkout_button_text,
+            priceFormat.format(totalPrice)
+        )
     }
 
     companion object {
+        private val priceFormat = DecimalFormat("#.##")
+
         fun newInstance() = CartFragment()
     }
 

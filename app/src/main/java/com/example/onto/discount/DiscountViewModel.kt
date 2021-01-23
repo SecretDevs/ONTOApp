@@ -24,7 +24,7 @@ class DiscountViewModel @ViewModelInject constructor(
                 intent.discountId
             )
             DiscountIntent.NavigateToCartIntent -> DiscountAction.NavigateToCartAction
-            DiscountIntent.DiscountNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
+            DiscountIntent.UpdateCartIntent -> DiscountAction.UpdateCartAction
         }
 
     override suspend fun performAction(action: DiscountAction): DiscountEffect =
@@ -71,6 +71,12 @@ class DiscountViewModel @ViewModelInject constructor(
                 coordinator.navigateToProduct(action.productId)
                 DiscountEffect.NoEffect
             }
+            DiscountAction.UpdateCartAction -> DiscountEffect.CartInformationLoadedEffect(
+                when (val result = cartUseCase.getCartInformation()) {
+                    is Result.Success -> result.data
+                    is Result.Error -> null
+                }
+            )
         }
 
     override fun stateReducer(

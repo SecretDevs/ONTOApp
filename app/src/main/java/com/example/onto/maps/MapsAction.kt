@@ -7,5 +7,6 @@ sealed class MapsAction : MviAction {
     object LoadShopsAction : MapsAction()
     object CheckPermissionsAction : MapsAction()
     object LoadedMapAction : MapsAction()
+    object NavigateToCartAction : MapsAction()
 
 }

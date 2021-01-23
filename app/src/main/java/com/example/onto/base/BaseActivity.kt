@@ -37,8 +37,8 @@ abstract class BaseActivity<
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         _intentLiveData.value = backStackIntent()
     }
 

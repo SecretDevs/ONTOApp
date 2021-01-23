@@ -25,7 +25,8 @@ interface CartDao {
     suspend fun getLocalCartItemById(cartProductId: Long): LocalCartItem
 
     @Query(
-        "SELECT COUNT(*) AS count, SUM(LocalOntoProduct.price) as totalPrice FROM LocalCartItem " +
+        "SELECT COUNT(*) AS count, SUM(LocalOntoProduct.price * LocalCartItem.quantity) as totalPrice " +
+                "FROM LocalCartItem " +
                 "INNER JOIN LocalOntoProduct ON LocalCartItem.product_id = LocalOntoProduct.id"
     )
     suspend fun getCartInformation(): CartInformation

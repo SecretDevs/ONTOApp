@@ -27,6 +27,10 @@ sealed class CartIntent : MviIntent {
         val productId: Long
     ) : CartIntent()
 
+    data class OpenProductDetailsIntent(val productId: Long) : CartIntent()
+
     object CartNothingIntent : CartIntent(), NothingIntent
+
+    object CheckoutIntent : CartIntent()
 
 }

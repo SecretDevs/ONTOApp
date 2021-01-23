@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.location.Location
 import android.os.Bundle
 import android.view.View
+import android.widget.RelativeLayout
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.core.content.ContextCompat
@@ -27,13 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_maps.*
 import kotlinx.android.synthetic.main.item_error.*
 import timber.log.Timber
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
     override val layoutResourceId: Int = R.layout.fragment_maps
     override val viewModel: MapsViewModel by viewModels()
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var shopInfoWindowAdapter: ShopInfoWindowAdapter
 
@@ -54,11 +56,25 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
         }
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(this.requireActivity())
+
+        cart_card.setOnClickListener { _intentLiveData.value = MapsIntent.OpenCartIntent }
     }
 
     override fun render(viewState: MapsViewState) {
         if (!viewState.isPermissionsChecked) {
             getLocationPermission()
+        }
+
+        cart_badge.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        cart_price.isVisible =
+            viewState.cartInformation != null && viewState.cartInformation.count != 0
+        if (viewState.cartInformation != null) {
+            cart_price.text = resources.getString(
+                R.string.price_placeholder,
+                priceFormat.format(viewState.cartInformation.totalPrice)
+            )
+            cart_badge.text = viewState.cartInformation.count.toString()
         }
 
         loading_view.isVisible = viewState.isInitialLoading || !viewState.isMapLoaded
@@ -67,7 +83,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
 
         if (viewState.ontoShopsList.isNotEmpty()) {
             map_view.isVisible = true
-            if (!this@MapsFragment::map.isInitialized) {
+            if (map == null) {
                 map_view.getMapAsync {
                     this@MapsFragment.map = it
                     it.setInfoWindowAdapter(shopInfoWindowAdapter)
@@ -80,7 +96,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
                             .bearing(0F)
                             .tilt(25F)
                             .build()
-                        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                        map?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                         true
                     }
                     loadMap()
@@ -95,24 +111,19 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        this.savedInstanceState = savedInstanceState
         if (savedInstanceState != null) {
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION)
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION)
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.savedInstanceState = savedInstanceState
         map_view.onCreate(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         map.let { map ->
-            outState.putParcelable(KEY_CAMERA_POSITION, map.cameraPosition)
+            outState.putParcelable(KEY_CAMERA_POSITION, map?.cameraPosition)
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
         super.onSaveInstanceState(outState)
@@ -126,11 +137,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
     override fun onPause() {
         super.onPause()
         map_view.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        map_view.onDestroy()
+        map = null
     }
 
     override fun onLowMemory() {
@@ -151,7 +158,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
                     if (task.isSuccessful) {
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            map.moveCamera(
+                            map?.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
                                     LatLng(
                                         lastKnownLocation!!.latitude,
@@ -161,15 +168,15 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
                             )
                         }
                     } else {
-                        map.moveCamera(
+                        map?.moveCamera(
                             CameraUpdateFactory
                                 .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
                         )
-                        map.uiSettings?.isMyLocationButtonEnabled = false
+                        map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
             } else {
-                map.moveCamera(
+                map?.moveCamera(
                     CameraUpdateFactory
                         .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
                 )
@@ -222,16 +229,28 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
     }
 
     private fun updateLocationUI() {
-        if (!this::map.isInitialized) {
+        if (map == null) {
             return
         }
         try {
             if (locationPermissionGranted) {
-                map.isMyLocationEnabled = true
-                map.uiSettings?.isMyLocationButtonEnabled = true
+                map?.isMyLocationEnabled = true
+                map?.uiSettings?.isMyLocationButtonEnabled = true
+                val locationButton = (map_view.findViewById<View>("1".toInt())
+                    .parent as View).findViewById<View>("2".toInt())
+                val rlp = locationButton.layoutParams as RelativeLayout.LayoutParams
+
+                rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0)
+                rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
+                rlp.setMargins(
+                    0,
+                    0,
+                    resources.getDimensionPixelSize(R.dimen.margin_default),
+                    resources.getDimensionPixelSize(R.dimen.margin_default)
+                )
             } else {
-                map.isMyLocationEnabled = false
-                map.uiSettings?.isMyLocationButtonEnabled = true
+                map?.isMyLocationEnabled = false
+                map?.uiSettings?.isMyLocationButtonEnabled = true
                 lastKnownLocation = null
             }
         } catch (e: SecurityException) {
@@ -240,13 +259,13 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
     }
 
     private fun addMarkers(shopsList: List<OntoShop>) {
-        map.setInfoWindowAdapter(shopInfoWindowAdapter)
+        map?.setInfoWindowAdapter(shopInfoWindowAdapter)
         shopsList.forEach(::createShopMarker)
     }
 
     private fun createShopMarker(shop: OntoShop) {
         val shopLocation = LatLng(shop.location.latitude, shop.location.longitude)
-        map.addMarker(
+        map?.addMarker(
             MarkerOptions()
                 .position(shopLocation)
                 .icon(BitmapDescriptorFactory.fromBitmap(getMarkerIconAsBitmap()))
@@ -263,6 +282,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
         private const val DEFAULT_ZOOM = 10F
         private const val CURRENT_ZOOM = 12F
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        private val priceFormat = DecimalFormat("#.##")
 
         private const val KEY_CAMERA_POSITION = "camera_position"
         private const val KEY_LOCATION = "location"

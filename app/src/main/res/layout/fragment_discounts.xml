@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlways">
@@ -21,7 +21,6 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/margin_default"
                 android:text="@string/offer_title"
                 android:textAppearance="@style/TextAppearance.AppTheme.ToolbarTitleMain"
@@ -33,16 +32,17 @@
                 android:id="@+id/cart_btn"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="@dimen/margin_default"
                 android:padding="4dp"
-                android:src="@drawable/ic_cart" />
+                android:src="@drawable/ic_cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/cart_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end|top"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/badge_background"
@@ -52,9 +52,27 @@
                 android:paddingEnd="6dp"
                 android:paddingBottom="2dp"
                 android:textAppearance="@style/TextAppearance.AppTheme.BadgeText"
-                tools:text="2" />
+                tools:text="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </FrameLayout>
+            <TextView
+                android:id="@+id/cart_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/ic_cart_price_background"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/colorOnSurface"
+                app:layout_constraintBottom_toBottomOf="@+id/cart_btn"
+                app:layout_constraintEnd_toStartOf="@+id/cart_btn"
+                app:layout_constraintTop_toTopOf="@+id/cart_btn"
+                tools:text="11275 ₽" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

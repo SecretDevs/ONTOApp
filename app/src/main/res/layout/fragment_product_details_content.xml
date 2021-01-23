@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:paddingBottom="68dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/product_details_image"
@@ -133,8 +133,7 @@
         android:background="#F1F1F1"
         app:layout_constraintBottom_toTopOf="@+id/product_details_price_value"
         app:layout_constraintEnd_toEndOf="@+id/product_details_price_value"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/product_details_kcal_value" />
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <TextView
         android:id="@+id/product_details_price_title"
@@ -161,24 +160,119 @@
         tools:text="275 ₽" />
 
     <TextView
-        android:id="@+id/product_details_description"
+        android:id="@+id/product_details_description_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default"
         android:layout_marginTop="@dimen/margin_default"
+        android:text="@string/product_details_description_title"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsTitle"
+        app:layout_constraintEnd_toStartOf="@+id/product_details_description_toggle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_price_value" />
+
+    <ImageView
+        android:id="@id/product_details_description_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_default"
-        android:paddingBottom="84dp"
-        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+        android:src="@drawable/ic_baseline_expand_less"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/product_details_description_title" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/product_details_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:el_expanded="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_details_price_value"
-        tools:text="@tools:sample/lorem/random" />
+        app:layout_constraintTop_toBottomOf="@+id/product_details_description_toggle">
+
+        <TextView
+            android:id="@+id/product_details_description_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+            tools:text="@tools:sample/lorem/random" />
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+    <View
+        android:id="@+id/view2"
+        style="@style/DividerStyle"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/gutter_default"
+        app:layout_constraintEnd_toEndOf="@+id/product_details_description_toggle"
+        app:layout_constraintStart_toStartOf="@+id/product_details_description_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_description" />
+
+    <TextView
+        android:id="@+id/product_details_advantages_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_default"
+        android:text="@string/product_details_advantages_title"
+        android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsTitle"
+        app:layout_constraintEnd_toStartOf="@+id/product_details_advantages_toggle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_description" />
+
+    <ImageView
+        android:id="@id/product_details_advantages_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:src="@drawable/ic_baseline_expand_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/product_details_advantages_title" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/product_details_advantages"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_advantages_toggle">
+
+        <TextView
+            android:id="@+id/product_details_advantages_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.AppTheme.ProductDetailsBody"
+            tools:text="@tools:sample/lorem/random" />
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+    <View
+        android:id="@+id/view3"
+        style="@style/DividerStyle"
+        android:layout_width="0dp"
+        android:layout_marginTop="@dimen/gutter_default"
+        app:layout_constraintEnd_toEndOf="@+id/product_details_advantages_toggle"
+        app:layout_constraintStart_toStartOf="@+id/product_details_advantages_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_details_advantages" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/similar_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_default"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_similar_product"
+        tools:orientation="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

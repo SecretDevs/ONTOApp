@@ -3,6 +3,7 @@ package com.example.onto.products.recycler
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.recycler.DataViewHolder
@@ -35,6 +36,7 @@ class ProductViewHolder(
         Glide.with(image)
             .load(data.image)
             .into(image)
+        addToCart.isVisible = data.inStock != 0
     }
 
     fun clear() {

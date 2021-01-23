@@ -1,8 +1,9 @@
 package com.example.onto.data.usecase
 
-import com.example.onto.data.datasource.ProductsDataSource
-import com.example.onto.di.LocalDataSource
-import com.example.onto.di.RemoteDataSource
+import com.example.onto.data.datasource.LocalProductsDataSource
+import com.example.onto.data.datasource.RemoteProductsDataSource
+import com.example.onto.mapper.ProductMapper
+import com.example.onto.mapper.ProductWithSimilarMapper
 import com.example.onto.utils.Result
 import com.example.onto.vo.inapp.OntoProduct
 import javax.inject.Inject
@@ -13,8 +14,10 @@ interface ProductsUseCase {
 }
 
 class ProductsUseCaseImpl @Inject constructor(
-    @RemoteDataSource private val remoteProductsDataSource: ProductsDataSource,
-    @LocalDataSource private val localDataSource: ProductsDataSource
+    private val remoteProductsDataSource: RemoteProductsDataSource,
+    private val localDataSource: LocalProductsDataSource,
+    private val productMapper: ProductMapper,
+    private val productWithSimilarMapper: ProductWithSimilarMapper
 ) : ProductsUseCase {
     override suspend fun getProductTags(): Result<List<Int>> {
         throw UnsupportedOperationException("API is not realized yet")
@@ -25,12 +28,25 @@ class ProductsUseCaseImpl @Inject constructor(
             if (tagIds.isEmpty()) remoteProductsDataSource.getProducts()
             else remoteProductsDataSource.getFilteredProducts(tagIds)
         when (remoteResult) {
-            is Result.Success -> localDataSource.addProducts(remoteResult.data)
+            is Result.Success -> localDataSource.addProducts(
+                remoteResult.data
+                    .map(productWithSimilarMapper::mapFromDomain)
+                    .map(productWithSimilarMapper::mapToEntity)
+            )
             is Result.Error -> return remoteResult
         }
-        return if (tagIds.isEmpty()) localDataSource.getProducts() else localDataSource.getFilteredProducts(
-            tagIds
-        )
+
+        return if (tagIds.isEmpty()) {
+            when (val result = localDataSource.getProducts()) {
+                is Result.Success -> Result.Success(result.data.map(productMapper::mapFromEntity))
+                is Result.Error -> Result.Error(result.throwable)
+            }
+        } else {
+            when (val result = localDataSource.getFilteredProducts(tagIds)) {
+                is Result.Success -> Result.Success(result.data.map(productMapper::mapFromEntity))
+                is Result.Error -> Result.Error(result.throwable)
+            }
+        }
     }
 
 }

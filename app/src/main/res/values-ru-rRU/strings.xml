@@ -46,4 +46,23 @@
     <string name="hint_house">Дом</string>
     <string name="hint_building">Строение</string>
     <string name="hint_apartment">Квартира</string>
+    <string name="bottom_sheet_payment_title">Оплата</string>
+    <string name="card_number_hint">Номер карты</string>
+    <string name="card_holder_name_hint">Имя держателя карты</string>
+    <string name="expire_hint">мм/гг</string>
+    <string name="checkout_button_text">%s₽ - оформить</string>
+    <string name="pay_button_text">%s₽ - купить</string>
+    <string name="order_step_text">Шаг %d.</string>
+    <string name="repeat_order_text">Повторить</string>
+    <string name="fragment_checkout">Оформление заказа</string>
+    <string name="order_checkout_next_btn">Следующий</string>
+    <string name="product_details_description_title">Описание</string>
+    <string name="product_details_advantages_title">Подробнее</string>
+    <string name="contact_details_title">Контактные данные</string>
+    <string name="order_delivery_address_title">Доставка по адресу</string>
+    <string name="order_delivery_post_title">Почта России</string>
+    <string name="order_delivery_pickup_title">Пункт выдачи</string>
+    <string name="order_number_text">Заказ №%d</string>
+    <string name="commentary_title">Комментарий</string>
+    <string name="order_delivery_address_full">%s, ул. %s, д.%s, к. %s, кв. %s</string>
 </resources>

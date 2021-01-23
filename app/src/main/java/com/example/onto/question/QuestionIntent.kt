@@ -18,6 +18,4 @@ sealed class QuestionIntent : MviIntent {
         val question: String
     ) : QuestionIntent()
 
-    object QuestionNothingIntent : QuestionIntent()
-
 }

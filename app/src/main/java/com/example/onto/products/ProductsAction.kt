@@ -22,4 +22,6 @@ sealed class ProductsAction : MviAction {
         val productId: Long
     ) : ProductsAction()
 
+    object UpdateCartAction : ProductsAction()
+
 }

@@ -13,7 +13,7 @@ import dagger.hilt.android.scopes.ActivityScoped
 abstract class MainActivityModule {
     @Binds
     @ActivityScoped
-    abstract fun provideCoordinator(
+    abstract fun bindCoordinator(
         coordinatorImpl: CoordinatorImpl
     ): Coordinator
 }

@@ -1,7 +1,6 @@
 package com.example.onto.products
 
 import com.example.onto.base.MviIntent
-import com.example.onto.base.NothingIntent
 
 sealed class ProductsIntent : MviIntent {
 
@@ -25,6 +24,6 @@ sealed class ProductsIntent : MviIntent {
         val productId: Long
     ) : ProductsIntent()
 
-    object ProductsNothingIntent : ProductsIntent(), NothingIntent
+    object UpdateCartIntent : ProductsIntent()
 
 }

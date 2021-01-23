@@ -8,6 +8,8 @@ sealed class MaterialDetailsAction : MviAction {
         val articleId: Long
     ) : MaterialDetailsAction()
 
+    object NavigateToCartAction : MaterialDetailsAction()
+
     object NavigateBackAction : MaterialDetailsAction()
 
 }

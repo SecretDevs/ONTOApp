@@ -25,7 +25,7 @@ class ProductsViewModel @ViewModelInject constructor(
             is ProductsIntent.OpenProductDetailsIntent -> ProductsAction.NavigateToProductDetailsAction(
                 intent.productId
             )
-            ProductsIntent.ProductsNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
+            ProductsIntent.UpdateCartIntent -> ProductsAction.UpdateCartAction
         }
 
     override suspend fun performAction(action: ProductsAction): ProductsEffect =
@@ -72,6 +72,12 @@ class ProductsViewModel @ViewModelInject constructor(
                 coordinator.navigateToProduct(action.productId)
                 ProductsEffect.NoEffect
             }
+            ProductsAction.UpdateCartAction -> ProductsEffect.CartInformationLoadedEffect(
+                when (val result = cartUseCase.getCartInformation()) {
+                    is Result.Success -> result.data
+                    is Result.Error -> null
+                }
+            )
         }
 
     override fun stateReducer(
