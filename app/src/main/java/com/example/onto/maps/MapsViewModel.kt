@@ -19,9 +19,9 @@ class MapsViewModel @ViewModelInject constructor(
             is MapsIntent.PermissionsCheckIntent -> MapsAction.CheckPermissionsAction
             is MapsIntent.InitialIntent -> MapsAction.LoadShopsAction
             is MapsIntent.ReloadIntent -> MapsAction.LoadShopsAction
-            MapsIntent.MapsNothingIntent -> throw IllegalArgumentException("Nothing intent interpreting")
             MapsIntent.MapLoadedIntent -> MapsAction.LoadedMapAction
             MapsIntent.OpenCartIntent -> MapsAction.NavigateToCartAction
+            MapsIntent.MapsUpdateCart -> MapsAction.UpdateCartAction
         }
 
     override suspend fun performAction(action: MapsAction): MapsEffect =
@@ -50,6 +50,12 @@ class MapsViewModel @ViewModelInject constructor(
                 coordinator.navigateToCart()
                 MapsEffect.NoEffect
             }
+            MapsAction.UpdateCartAction -> MapsEffect.CartInformationLoadedEffect(
+                when (val result = cartUseCase.getCartInformation()) {
+                    is Result.Success -> result.data
+                    is Result.Error -> null
+                }
+            )
         }
 
 

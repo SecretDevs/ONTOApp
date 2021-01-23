@@ -8,5 +8,6 @@ sealed class MapsAction : MviAction {
     object CheckPermissionsAction : MapsAction()
     object LoadedMapAction : MapsAction()
     object NavigateToCartAction : MapsAction()
+    object UpdateCartAction : MapsAction()
 
 }

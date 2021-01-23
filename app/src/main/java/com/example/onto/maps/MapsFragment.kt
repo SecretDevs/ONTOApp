@@ -46,7 +46,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
     private var lastKnownLocation: Location? = null
     private var savedInstanceState: Bundle? = null
 
-    override fun backStackIntent(): MapsIntent = MapsIntent.MapsNothingIntent
+    override fun backStackIntent(): MapsIntent = MapsIntent.MapsUpdateCart
     override fun initialIntent(): MapsIntent? = MapsIntent.PermissionsCheckIntent
 
     override fun initViews() {
@@ -130,19 +130,19 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
     }
 
     override fun onResume() {
-        super.onResume()
         map_view.onResume()
+        super.onResume()
     }
 
     override fun onPause() {
-        super.onPause()
         map_view.onPause()
         map = null
+        super.onPause()
     }
 
     override fun onLowMemory() {
-        super.onLowMemory()
         map_view.onLowMemory()
+        super.onLowMemory()
     }
 
     private fun loadMap() {
