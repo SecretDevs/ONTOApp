@@ -7,9 +7,9 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.recycler.DataViewHolder
+import com.example.onto.utils.formatPrice
 import com.example.onto.vo.inapp.OntoProduct
 import com.google.android.material.imageview.ShapeableImageView
-import java.text.DecimalFormat
 
 class ProductViewHolder(
     view: View,
@@ -32,7 +32,7 @@ class ProductViewHolder(
         this.data = data
         name.text = data.name
         price.text =
-            price.context.getString(R.string.price_placeholder, priceFormat.format(data.price))
+            price.context.getString(R.string.price_placeholder, formatPrice(data.price))
         Glide.with(image)
             .load(data.image)
             .into(image)
@@ -41,10 +41,6 @@ class ProductViewHolder(
 
     fun clear() {
         Glide.with(image).clear(image)
-    }
-
-    companion object {
-        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

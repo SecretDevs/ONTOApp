@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
+import com.example.onto.utils.formatPrice
 import com.example.onto.vo.remote.OntoShop
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -72,7 +73,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
         if (viewState.cartInformation != null) {
             cart_price.text = resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(viewState.cartInformation.totalPrice)
+                formatPrice(viewState.cartInformation.totalPrice)
             )
             cart_badge.text = viewState.cartInformation.count.toString()
         }
@@ -83,7 +84,7 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
 
         if (viewState.ontoShopsList.isNotEmpty()) {
             map_view.isVisible = true
-            if (map == null) {
+            if (!viewState.isMapLoaded) {
                 map_view.getMapAsync {
                     this@MapsFragment.map = it
                     it.setInfoWindowAdapter(shopInfoWindowAdapter)
@@ -127,22 +128,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
         super.onSaveInstanceState(outState)
-    }
-
-    override fun onResume() {
-        map_view.onResume()
-        super.onResume()
-    }
-
-    override fun onPause() {
-        map_view.onPause()
-        map = null
-        super.onPause()
-    }
-
-    override fun onLowMemory() {
-        map_view.onLowMemory()
-        super.onLowMemory()
     }
 
     private fun loadMap() {
@@ -282,7 +267,6 @@ class MapsFragment : BaseFragment<MapsViewState, MapsIntent>() {
         private const val DEFAULT_ZOOM = 10F
         private const val CURRENT_ZOOM = 12F
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
-        private val priceFormat = DecimalFormat("#.##")
 
         private const val KEY_CAMERA_POSITION = "camera_position"
         private const val KEY_LOCATION = "location"

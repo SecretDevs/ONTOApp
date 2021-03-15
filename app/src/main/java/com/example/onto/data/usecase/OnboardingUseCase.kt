@@ -15,7 +15,6 @@ class OnboardingUseCaseImpl @Inject constructor(
 ) : OnboardingUseCase {
     private val pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-
     override fun isOnboardingScreenSeen(): Boolean = pref.getBoolean(ONBOARDING_FIELD, false)
 
     override fun setOnboardingScreenSeen() {

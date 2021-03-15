@@ -4,6 +4,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.recycler.DataViewHolder
+import com.example.onto.utils.formatPrice
 import com.example.onto.vo.inapp.CartItem
 import kotlinx.android.synthetic.main.item_cart_product.view.*
 import java.text.DecimalFormat
@@ -35,16 +36,12 @@ class CartItemViewHolder(
         view.cart_product_price.text =
             view.resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(data.product.price)
+                formatPrice(data.product.price)
             )
     }
 
     fun clear() {
         Glide.with(view.cart_product_image).clear(view.cart_product_image)
-    }
-
-    companion object {
-        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

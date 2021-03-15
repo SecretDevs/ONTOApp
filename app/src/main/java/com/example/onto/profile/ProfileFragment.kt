@@ -4,11 +4,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
+import com.example.onto.utils.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile_content.*
 import kotlinx.android.synthetic.main.item_error.*
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
@@ -56,7 +56,7 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
         if (viewState.cartInformation != null) {
             cart_price.text = resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(viewState.cartInformation.totalPrice)
+                formatPrice(viewState.cartInformation.totalPrice)
             )
             cart_badge.text = viewState.cartInformation.count.toString()
         }
@@ -73,10 +73,6 @@ class ProfileFragment : BaseFragment<ProfileViewState, ProfileIntent>() {
             street_edit.setText(viewState.user.address.street)
             apartment_edit.setText(viewState.user.address.apartment.toString())
         }
-    }
-
-    companion object {
-        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

@@ -64,4 +64,9 @@ class OrderConfirmationFragment :
         order_commentary_text.isVisible = viewState.commentary.isNotEmpty()
         order_commentary_text.text = viewState.commentary
     }
+
+    private fun checkFormСompleteness() {
+
+    }
+
 }

@@ -6,16 +6,11 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.BaseFragment
-import com.example.onto.materials.MaterialsFragment
+import com.example.onto.utils.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_article_details.*
-import kotlinx.android.synthetic.main.fragment_article_details.cart_badge
-import kotlinx.android.synthetic.main.fragment_article_details.cart_btn
-import kotlinx.android.synthetic.main.fragment_article_details.cart_price
 import kotlinx.android.synthetic.main.fragment_article_details_content.*
-import kotlinx.android.synthetic.main.fragment_materials.*
 import kotlinx.android.synthetic.main.item_error.*
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialDetailsIntent>() {
@@ -33,7 +28,9 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
         arrow_back_btn.setOnClickListener {
             _intentLiveData.value = MaterialDetailsIntent.GoBackIntent
         }
-        cart_btn.setOnClickListener { _intentLiveData.value = MaterialDetailsIntent.NavigateToCartIntent }
+        cart_btn.setOnClickListener {
+            _intentLiveData.value = MaterialDetailsIntent.NavigateToCartIntent
+        }
 
         top_article_fab.setOnClickListener {
             article_details_content.smoothScrollTo(0, 0)
@@ -55,7 +52,7 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
         if (viewState.cartInformation != null) {
             cart_price.text = resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(viewState.cartInformation.totalPrice)
+                formatPrice(viewState.cartInformation.totalPrice)
             )
             cart_badge.text = viewState.cartInformation.count.toString()
         }
@@ -73,7 +70,6 @@ class MaterialDetailsFragment : BaseFragment<MaterialDetailsViewState, MaterialD
     private fun getArticleId() = arguments?.getLong(ARTICLE_ID_KEY) ?: 0L
 
     companion object {
-        private val priceFormat = DecimalFormat("#.##")
         private const val ARTICLE_ID_KEY = "article_id"
 
         fun newInstance(articleId: Long): MaterialDetailsFragment =

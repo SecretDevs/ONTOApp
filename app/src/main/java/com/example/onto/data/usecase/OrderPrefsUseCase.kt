@@ -2,10 +2,14 @@ package com.example.onto.data.usecase
 
 import android.content.Context
 import androidx.core.content.edit
+import at.favre.lib.armadillo.Armadillo
+import at.favre.lib.armadillo.AuthenticatedEncryption
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 interface OrderPrefsUseCase {
+    fun canNavigateNext(): Boolean
+    fun setCanNavigateNext(canNavigateNext: Boolean)
     fun setFirstName(firstName: String)
     fun setLastName(lastName: String)
     fun setEmail(email: String)
@@ -35,7 +39,18 @@ interface OrderPrefsUseCase {
 class OrderPrefsUseCaseImpl @Inject constructor(
     @ApplicationContext context: Context
 ) : OrderPrefsUseCase {
-    private val pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private val pref = Armadillo.create(context, PREF_NAME)
+        .encryptionFingerprint(context)
+        .encryptionKeyStrength(AuthenticatedEncryption.STRENGTH_VERY_HIGH)
+        .build()
+
+    override fun canNavigateNext(): Boolean = pref.getBoolean(PREF_CAN_NEXT, false)
+
+    override fun setCanNavigateNext(canNavigateNext: Boolean) {
+        pref.edit {
+            putBoolean(PREF_CAN_NEXT, canNavigateNext)
+        }
+    }
 
     override fun setFirstName(firstName: String) {
         pref.edit {
@@ -135,6 +150,7 @@ class OrderPrefsUseCaseImpl @Inject constructor(
 
     companion object {
         private const val PREF_NAME = "ONTO_ORDER_PREF"
+        private const val PREF_CAN_NEXT = "ONTO_CAN_NEXT"
         private const val FIRST_NAME_FIELD = "ONTO_FIRST_NAME"
         private const val LAST_NAME_FIELD = "ONTO_LAST_NAME"
         private const val EMAIL_FIELD = "ONTO_EMAIL"

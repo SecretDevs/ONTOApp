@@ -24,7 +24,7 @@ object DatabaseModule {
             context,
             OntoDatabase::class.java,
             "onto_local_cache"
-        ).allowMainThreadQueries().build()
+        ).build()
 
     @Provides
     @Singleton

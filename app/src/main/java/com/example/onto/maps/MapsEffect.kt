@@ -10,7 +10,9 @@ sealed class MapsEffect : MviEffect {
 
     object InitialLoadingEffect : MapsEffect()
 
-    object MapLoadedEffect : MapsEffect()
+    data class MapLoadedEffect(
+        val cartInformation: CartInformation?
+    ) : MapsEffect()
 
     object NoEffect : MapsEffect()
 
@@ -23,6 +25,10 @@ sealed class MapsEffect : MviEffect {
     ) : MapsEffect()
 
     data class CartInformationLoadedEffect(
+        val cartInformation: CartInformation?
+    ) : MapsEffect()
+
+    data class BackstackCartInformationLoadedEffect(
         val cartInformation: CartInformation?
     ) : MapsEffect()
 

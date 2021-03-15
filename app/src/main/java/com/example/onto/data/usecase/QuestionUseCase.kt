@@ -2,6 +2,8 @@ package com.example.onto.data.usecase
 
 import android.content.Context
 import androidx.core.content.edit
+import at.favre.lib.armadillo.Armadillo
+import at.favre.lib.armadillo.AuthenticatedEncryption
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -15,7 +17,10 @@ interface QuestionUseCase {
 class QuestionUseCaseImpl @Inject constructor(
     @ApplicationContext context: Context
 ) : QuestionUseCase {
-    private val pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private val pref = Armadillo.create(context, PREF_NAME)
+        .encryptionFingerprint(context)
+        .encryptionKeyStrength(AuthenticatedEncryption.STRENGTH_VERY_HIGH)
+        .build()
 
     override fun setEmail(email: String) {
         pref.edit {

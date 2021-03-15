@@ -7,9 +7,9 @@ import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.cart.recycler.CartAdapter
+import com.example.onto.utils.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_cart.*
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment<CartViewState, CartIntent>() {
@@ -19,7 +19,7 @@ class CartFragment : BaseFragment<CartViewState, CartIntent>() {
 
     private lateinit var adapter: CartAdapter
 
-    override fun backStackIntent(): CartIntent = CartIntent.CartNothingIntent
+    override fun backStackIntent(): CartIntent = CartIntent.InitialIntent
     override fun initialIntent(): CartIntent? = CartIntent.InitialIntent
 
     override fun initViews() {
@@ -55,13 +55,11 @@ class CartFragment : BaseFragment<CartViewState, CartIntent>() {
         checkout_layout.isVisible = viewState.data.isNotEmpty()
         checkout_btn.text = resources.getString(
             R.string.checkout_button_text,
-            priceFormat.format(totalPrice)
+            formatPrice(totalPrice)
         )
     }
 
     companion object {
-        private val priceFormat = DecimalFormat("#.##")
-
         fun newInstance() = CartFragment()
     }
 

@@ -9,12 +9,12 @@ import com.example.onto.R
 import com.example.onto.base.BaseFragment
 import com.example.onto.product.recycler.SimilarProductItemDecoration
 import com.example.onto.product.recycler.SimilarProductsAdapter
+import com.example.onto.utils.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.fragment_product_details_content.*
 import kotlinx.android.synthetic.main.item_error.*
 import net.cachapa.expandablelayout.ExpandableLayout
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ProductDetailsFragment : BaseFragment<ProductDetailsViewState, ProductDetailsIntent>() {
@@ -123,7 +123,7 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsViewState, ProductDeta
         if (viewState.cartInformation != null) {
             cart_price.text = resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(viewState.cartInformation.totalPrice)
+                formatPrice(viewState.cartInformation.totalPrice)
             )
             cart_badge.text = viewState.cartInformation.count.toString()
         }
@@ -136,7 +136,7 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsViewState, ProductDeta
             product_details_price_value.text =
                 resources.getString(
                     R.string.price_placeholder,
-                    priceFormat.format(viewState.product.product.price)
+                    formatPrice(viewState.product.product.price)
                 )
             product_details_description_body.text =
                 viewState.product.product.info
@@ -172,7 +172,6 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsViewState, ProductDeta
     private fun getProductId() = arguments?.getLong(PRODUCT_ID_KEY) ?: 0L
 
     companion object {
-        private val priceFormat = DecimalFormat("#.##")
         private const val PRODUCT_ID_KEY = "product_id"
 
         fun newInstance(productId: Long): ProductDetailsFragment =

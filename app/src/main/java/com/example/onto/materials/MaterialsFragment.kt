@@ -8,6 +8,7 @@ import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.materials.recycler.MaterialAdapter
 import com.example.onto.materials.recycler.MaterialsItemDecoration
+import com.example.onto.utils.formatPrice
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_materials.*
@@ -69,7 +70,7 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
         if (viewState.cartInformation != null) {
             cart_price.text = resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(viewState.cartInformation.totalPrice)
+                formatPrice(viewState.cartInformation.totalPrice)
             )
             cart_badge.text = viewState.cartInformation.count.toString()
         }
@@ -85,10 +86,6 @@ class MaterialsFragment : BaseFragment<MaterialViewState, MaterialIntent>() {
                 Snackbar.LENGTH_SHORT
             ).show()
         }
-    }
-
-    companion object {
-        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

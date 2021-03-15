@@ -6,9 +6,9 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.onto.R
 import com.example.onto.base.recycler.DataViewHolder
+import com.example.onto.utils.formatPrice
 import com.example.onto.vo.remote.OntoOffer
 import kotlinx.android.synthetic.main.item_discount.view.*
-import java.text.DecimalFormat
 
 class DiscountViewHolder(
     view: View,
@@ -32,15 +32,11 @@ class DiscountViewHolder(
 
         name.text = data.name
         price.text =
-            price.context.getString(R.string.price_placeholder, priceFormat.format(data.price))
+            price.context.getString(R.string.price_placeholder, formatPrice(data.price))
         Glide.with(image)
             .load(data.image)
             .into(image)
         badgePercent.text = "43%"
-    }
-
-    companion object {
-        private val priceFormat = DecimalFormat("#.##")
     }
 
     fun clear() {

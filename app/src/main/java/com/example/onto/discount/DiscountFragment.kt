@@ -8,13 +8,13 @@ import com.example.onto.base.BaseFragment
 import com.example.onto.base.recycler.RecyclerState
 import com.example.onto.discount.recycler.DiscountAdapter
 import com.example.onto.discount.recycler.DiscountItemDecoration
+import com.example.onto.utils.formatPrice
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_discounts.*
 import kotlinx.android.synthetic.main.fragment_discounts.cart_badge
 import kotlinx.android.synthetic.main.fragment_discounts.cart_btn
 import kotlinx.android.synthetic.main.fragment_materials.refresher
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
@@ -73,7 +73,7 @@ class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
         if (viewState.cartInformation != null) {
             cart_price.text = resources.getString(
                 R.string.price_placeholder,
-                priceFormat.format(viewState.cartInformation.totalPrice)
+                formatPrice(viewState.cartInformation.totalPrice)
             )
             cart_badge.text = viewState.cartInformation.count.toString()
         }
@@ -89,10 +89,6 @@ class DiscountFragment : BaseFragment<DiscountViewState, DiscountIntent>() {
                 Snackbar.LENGTH_SHORT
             ).show()
         }
-    }
-
-    companion object {
-        private val priceFormat = DecimalFormat("#.##")
     }
 
 }

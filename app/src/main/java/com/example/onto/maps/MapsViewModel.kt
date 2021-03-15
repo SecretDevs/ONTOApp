@@ -45,19 +45,23 @@ class MapsViewModel @ViewModelInject constructor(
                     is Result.Error -> MapsEffect.InitialLoadingErrorEffect(result.throwable)
                 }
             }
-            MapsAction.LoadedMapAction -> MapsEffect.MapLoadedEffect
+            MapsAction.LoadedMapAction -> MapsEffect.MapLoadedEffect(
+                when (val result = cartUseCase.getCartInformation()) {
+                    is Result.Success -> result.data
+                    is Result.Error -> null
+                }
+            )
             MapsAction.NavigateToCartAction -> {
                 coordinator.navigateToCart()
                 MapsEffect.NoEffect
             }
-            MapsAction.UpdateCartAction -> MapsEffect.CartInformationLoadedEffect(
+            MapsAction.UpdateCartAction -> MapsEffect.BackstackCartInformationLoadedEffect(
                 when (val result = cartUseCase.getCartInformation()) {
                     is Result.Success -> result.data
                     is Result.Error -> null
                 }
             )
         }
-
 
     override fun stateReducer(oldState: MapsViewState, effect: MapsEffect): MapsViewState =
         when (effect) {
@@ -73,8 +77,8 @@ class MapsViewModel @ViewModelInject constructor(
                 effect.shops,
                 oldState.cartInformation
             )
-            MapsEffect.MapLoadedEffect -> MapsViewState.mapLoaded(
-                oldState.cartInformation,
+            is MapsEffect.MapLoadedEffect -> MapsViewState.mapLoaded(
+                effect.cartInformation,
                 oldState.isInitialLoading,
                 oldState.initialError,
                 oldState.ontoShopsList
@@ -88,5 +92,13 @@ class MapsViewModel @ViewModelInject constructor(
                 oldState.ontoShopsList
             )
             MapsEffect.NoEffect -> oldState
+            is MapsEffect.BackstackCartInformationLoadedEffect -> MapsViewState.cartInformationLoaded(
+                effect.cartInformation,
+                false,
+                oldState.isPermissionsChecked,
+                oldState.isInitialLoading,
+                oldState.initialError,
+                oldState.ontoShopsList
+            )
         }
 }
